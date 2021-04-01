@@ -1,0 +1,52 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 30px;
+  position: relative;
+  display: flex;
+}
+
+.emailLabel {
+  position: absolute;
+  top: 50%;
+  left: -50px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: url('../../images/mail.svg') center/contain no-repeat;
+}
+
+.passwordLabel {
+  composes: emailLabel;
+  background: url('../../images/passw.svg') center/80% no-repeat;
+}
+
+.input:focus {
+  border-color: red;
+}
+
+.button {
+  display: block;
+  margin: 15px auto 0;
+  width: fit-content;
+}
+
+.link {
+  composes: button;
+}
+
+.info {
+  color: red;
+  position: absolute;
+  bottom: -60%;
+  left: 0;
+}
+
+.text {
+  composes: info;
+  color: grey;
+  bottom: -105%;
+}
