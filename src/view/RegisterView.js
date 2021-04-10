@@ -1,5 +1,5 @@
 import { SingUpForm } from '../components/Forms';
 
-export default function RegisterView() {
-  return <SingUpForm />;
+export default function RegisterView(props) {
+  return <SingUpForm {...props} />;
 }

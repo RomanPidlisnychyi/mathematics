@@ -19,11 +19,6 @@ import {
   newPasswordSuccess,
   newPasswordError,
 } from '../actions/authActions';
-import {
-  createVacancyRequest,
-  createVacancySuccess,
-  createVacancyError,
-} from '../actions/vacancyActions';
 
 const loading = createReducer(false, {
   [registerRequest]: () => true,
@@ -41,9 +36,6 @@ const loading = createReducer(false, {
   [recoveryRequest]: () => true,
   [recoverySuccess]: () => false,
   [recoveryError]: () => false,
-  [createVacancyRequest]: () => true,
-  [createVacancySuccess]: () => false,
-  [createVacancyError]: () => false,
   [newPasswordRequest]: () => true,
   [newPasswordSuccess]: () => false,
   [newPasswordError]: () => false,

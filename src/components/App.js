@@ -1,25 +1,29 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { CSSTransition } from 'react-transition-group';
-import { Pinotify } from './Pinotify';
 import { PublicRoute, PrivateRoute } from './common/Routes';
 import Layout from './Layout/Layout';
 import { Header } from './Header';
-import { getMessage } from '../store/selectors/authSelectors';
 import { routes } from '../routes';
-// import { token } from '../utils/apiUtils';
+import { onCurrent } from '../store/operations/authOperations';
+import { getName } from '../store/selectors/authSelectors';
+import { token } from '../utils/apiUtils';
 // import SimpleTest from './SimpleTest/SimpleTest';
-import fade from './Pinotify/Pinotify.module.css';
 
 export default function App() {
-  const message = useSelector(getMessage);
+  const dispatch = useDispatch();
+  const name = useSelector(getName);
+  const tokens = token.getLocalTokens();
+
+  useEffect(() => {
+    if (!name && tokens) {
+      dispatch(onCurrent(tokens));
+    }
+  }, [dispatch, name, tokens]);
+
   return (
     <Layout>
       <Header />
-      <CSSTransition in={message} classNames={fade} timeout={250} unmountOnExit>
-        <Pinotify message={message} />
-      </CSSTransition>
       <Suspense fallback={false}>
         <Switch>
           {routes.map(route =>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
-// axios.defaults.baseURL = 'http://localhost:3001';
+// axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:3001';
 
 export const token = {
   setTokens(tokens) {
@@ -53,6 +53,7 @@ export const login = async credentials => {
 
     return response.data;
   } catch (err) {
+    console.log('err', err);
     if (err.response && err.response.data && err.response.data.message) {
       return err.response.data.message;
     }
@@ -133,77 +134,17 @@ export const newPassword = async credentials => {
   }
 };
 
-export const vacancies = async () => {
+export const addTest = async test => {
   try {
-    const response = await axios.get('/vacancy');
+    const response = await axios.post('/tests', test);
 
-    return response.data;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return err;
-  }
-};
+    console.log('response', response);
 
-export const createVacancy = async vacancy => {
-  try {
-    const response = await axios.post('/vacancy', vacancy);
-
-    return response.data;
+    // return { ...response.data, password };
   } catch (err) {
     if (err.response && err.response.data && err.response.data.message) {
       return err.response.data.message;
     }
     return 'Проверьте интернет';
-  }
-};
-
-export const updateVacancy = async (credentials, id) => {
-  try {
-    const response = await axios.patch(`/vacancy/${id}`, credentials);
-
-    return response.data;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
-
-export const deleteVacancy = async vacancyId => {
-  try {
-    const response = await axios.delete(`/vacancy/${vacancyId}`);
-
-    const {
-      data: { access },
-      status,
-    } = response;
-
-    if (access) {
-      token.setAccessToken(access);
-    }
-
-    return status;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
-
-export const getCompaniesNames = async (query = 'Viseven') => {
-  try {
-    const response = await fetch(
-      `https://jobs.dou.ua/companies/?name=${query}`
-    );
-
-    const data = await response.json();
-
-    console.log('data', data);
-  } catch (err) {
-    console.log('err', err);
   }
 };

@@ -13,14 +13,14 @@ import {
   recoverySuccess,
   recoveryError,
   newPasswordError,
+  setMessage,
   cleanMessage,
 } from '../actions/authActions';
-
-const isLocalTokens = localStorage.getItem('vacancyTokens');
 
 const initialUserState = {
   name: null,
   email: null,
+  status: null,
 };
 
 const initialTokensState = {
@@ -38,18 +38,15 @@ const user = createReducer(initialUserState, {
   [recoverySuccess]: (_, { payload }) => payload,
 });
 
-const tokens = createReducer(
-  isLocalTokens ? JSON.parse(isLocalTokens) : initialTokensState,
-  {
-    [loginSuccess]: (_, { payload }) => payload.tokens,
-    [currentSuccess]: (_, { payload }) => payload.tokens,
-    [refreshSuccess]: (state, { payload }) =>
-      payload ? { ...state, access: payload } : state,
-    [currentError]: () => initialTokensState,
-    [logoutSuccess]: () => initialTokensState,
-    [refreshError]: () => initialTokensState,
-  }
-);
+const tokens = createReducer(initialTokensState, {
+  [loginSuccess]: (_, { payload }) => payload.tokens,
+  [currentSuccess]: (_, { payload }) => payload.tokens,
+  [refreshSuccess]: (state, { payload }) =>
+    payload ? { ...state, access: payload } : state,
+  [currentError]: () => initialTokensState,
+  [logoutSuccess]: () => initialTokensState,
+  [refreshError]: () => initialTokensState,
+});
 
 const message = createReducer(null, {
   [registerError]: (_, { payload }) => payload,
@@ -59,6 +56,7 @@ const message = createReducer(null, {
   [currentError]: (_, { payload }) => payload,
   [recoveryError]: (_, { payload }) => payload,
   [newPasswordError]: (_, { payload }) => payload,
+  [setMessage]: (_, { payload }) => payload,
   [cleanMessage]: () => null,
 });
 

@@ -18,9 +18,9 @@ import {
   newPasswordRequest,
   newPasswordSuccess,
   newPasswordError,
+  setMessage,
   cleanMessage,
 } from '../actions/authActions';
-import { getAllVacancies, getStatuses } from '../actions/vacancyActions';
 import {
   register,
   login,
@@ -29,7 +29,6 @@ import {
   refresh,
   recovery,
   newPassword,
-  vacancies,
 } from '../../utils/apiUtils';
 
 export const onRegister = credentials => async dispatch => {
@@ -39,6 +38,8 @@ export const onRegister = credentials => async dispatch => {
 
   if (payload.name) {
     dispatch(registerSuccess(payload));
+    dispatch(setMessage('Registration was successfully'));
+    dispatch(onCleanMessage());
     return payload;
   }
 
@@ -51,9 +52,6 @@ export const onLogin = credentials => async dispatch => {
   const payload = await login(credentials);
   if (payload.user) {
     dispatch(loginSuccess(payload));
-    const { vacancies: userVacancies, statuses } = await vacancies();
-    dispatch(getAllVacancies(userVacancies));
-    dispatch(getStatuses(statuses));
     return;
   }
 
@@ -66,14 +64,11 @@ export const onLogout = () => dispatch => {
   dispatch(logoutSuccess());
 };
 
-export const onCurrent = () => async dispatch => {
+export const onCurrent = tokens => async dispatch => {
   dispatch(currentRequest());
-  const payload = await current();
+  const payload = await current(tokens);
   if (payload.user) {
     dispatch(currentSuccess(payload));
-    const { vacancies: userVacancies, statuses } = await vacancies();
-    dispatch(getAllVacancies(userVacancies));
-    dispatch(getStatuses(statuses));
     return;
   }
 

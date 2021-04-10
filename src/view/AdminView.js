@@ -1,5 +1,5 @@
-import React from 'react';
+import { SimpleTest } from '../components/SimpleTest';
 
 export default function AdminView() {
-  return <h1>Hello from Admin view</h1>;
+  return <SimpleTest />;
 }

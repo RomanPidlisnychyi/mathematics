@@ -1,14 +1,15 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { token } from '../../../utils/apiUtils';
+import { getStatus } from '../../../store/selectors/authSelectors';
 
 export default function PrivateRoute({ component: Component, ...rest }) {
-  const isAuthenticated = token.getLocalTokens();
+  const status = useSelector(getStatus);
+  const isAdmin = status === 'admin';
   return (
     <Route
       {...rest}
       render={props =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+        isAdmin ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );

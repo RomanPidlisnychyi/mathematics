@@ -4,7 +4,11 @@ import Loader from 'react-loader-spinner';
 import { Logo } from '../Logo';
 import { UserMenu } from '../UserMenu';
 import { Pinotify } from '../Pinotify';
-import { getName, getMessage } from '../../store/selectors/authSelectors';
+import {
+  getName,
+  getMessage,
+  getStatus,
+} from '../../store/selectors/authSelectors';
 import { isLoading } from '../../store/selectors/loadingSelectots';
 import { token } from '../../utils/apiUtils';
 import styles from './Header.module.css';
@@ -15,23 +19,22 @@ export default function Header() {
   const loading = useSelector(isLoading);
   const isToken = token.getLocalTokens();
   const message = useSelector(getMessage);
+  const status = useSelector(getStatus);
 
   return (
-    <header
-      className={isToken ? styles.header : `${styles.header} ${styles.solo}`}
-    >
+    <header className={styles.header}>
       <Logo />
       {loading && isToken && !name && (
         <Loader color="#79879a" height={24} width={45} />
       )}
-      <UserMenu name={name} isToken={isToken} />
+      <UserMenu name={name} isToken={isToken} status={status} />
       <CSSTransition
         in={!!message}
         classNames={fade}
         timeout={250}
         unmountOnExit
       >
-        <Pinotify err={message} />
+        <Pinotify message={message} />
       </CSSTransition>
     </header>
   );

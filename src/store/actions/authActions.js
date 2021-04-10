@@ -26,4 +26,5 @@ export const newPasswordRequest = createAction('NEW_PASSWORD_REQUEST');
 export const newPasswordSuccess = createAction('NEW_PASSWORD_SUCCESS');
 export const newPasswordError = createAction('NEW_PASSWORD_ERROR');
 
+export const setMessage = createAction('SET_MESSAGE');
 export const cleanMessage = createAction('CLEAN_MESSAGE');
