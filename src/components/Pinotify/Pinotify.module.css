@@ -1,0 +1,35 @@
+.enter {
+  transform: scale(0.1);
+}
+
+.enterActive {
+  transform: scale(1);
+  transition: transform 250ms linear;
+}
+
+.exit {
+  transform: scale(1);
+}
+
+.exitActive {
+  transform: scale(0.1);
+  transition: transform 250ms linear;
+}
+
+.container {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #f1392d;
+}
+
+@media screen and (min-width: 460px) {
+  .container {
+    left: 50%;
+    right: auto;
+  }
+}

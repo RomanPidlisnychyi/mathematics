@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './components/App';
-import store from './redux/store';
+import store from './store';
 
 ReactDOM.render(
   <BrowserRouter>

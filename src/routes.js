@@ -1,16 +1,25 @@
-import HomeView from './view/HomeView';
-import LoginView from './view/LoginView';
-import RecoveryView from './view/RecoveryView';
-import AdminView from './view/AdminView';
+import { lazy } from 'react';
 
-export default [
+export const routes = [
   {
     path: '/',
     label: 'Home',
     exact: true,
     pablic: true,
     restricted: false,
-    component: HomeView,
+    component: lazy(() =>
+      import('./view/HomeView' /* webpackChunkName: "home-view" */)
+    ),
+  },
+  {
+    path: '/register',
+    label: 'Register',
+    exact: true,
+    pablic: true,
+    restricted: true,
+    component: lazy(() =>
+      import('./view/RegisterView' /* webpackChunkName: "register-view" */)
+    ),
   },
   {
     path: '/login',
@@ -18,7 +27,9 @@ export default [
     exact: true,
     pablic: true,
     restricted: true,
-    component: LoginView,
+    component: lazy(() =>
+      import('./view/LoginView' /* webpackChunkName: "login-view" */)
+    ),
   },
   {
     path: '/recovery',
@@ -26,7 +37,9 @@ export default [
     exact: true,
     pablic: true,
     restricted: true,
-    component: RecoveryView,
+    component: lazy(() =>
+      import('./view/RecoveryView' /* webpackChunkName: "recovery-view" */)
+    ),
   },
   {
     path: '/admin',
@@ -34,6 +47,8 @@ export default [
     exact: true,
     pablic: false,
     restricted: false,
-    component: AdminView,
+    component: lazy(() =>
+      import('./view/AdminView' /* webpackChunkName: "admin-view" */)
+    ),
   },
 ];

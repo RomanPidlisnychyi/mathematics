@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+}
+
+.name {
+  color: grey;
+  border-right: 1px solid grey;
+  padding-right: 15px;
+  margin-right: 15px;
+}
+
+.button {
+  color: grey;
+  border: none;
+  padding-left: 20px;
+  min-height: 20px;
+  background: url('../../images/log-out.svg') left center / 20px no-repeat;
+}
+
+.button:hover {
+  color: #636161;
+  background-image: url('../../images/log-outOnHover.svg');
+}
+
+.buttonTitle {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .buttonTitle {
+    display: inline;
+  }
+}

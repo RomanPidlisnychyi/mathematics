@@ -1,0 +1,15 @@
+.form {
+  min-width: 320px;
+  margin: 0 auto;
+}
+
+.title {
+  padding-left: 50px;
+  color: grey;
+}
+
+.link {
+  display: block;
+  margin: 15px auto 0;
+  width: fit-content;
+}

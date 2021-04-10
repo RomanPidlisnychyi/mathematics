@@ -1,0 +1,74 @@
+.formGroup {
+  margin-bottom: 30px;
+  padding-left: 50px;
+  position: relative;
+  display: flex;
+}
+
+.input:focus:invalid {
+  border-color: red;
+}
+
+.email {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: url('../../../images/mail.svg') center/contain no-repeat;
+}
+
+.password {
+  composes: email;
+  background: url('../../../images/passw.svg') center/80% no-repeat;
+}
+
+.confirmPassword,
+.recoveryPassword,
+.name,
+.companyName,
+.URL,
+.phone,
+.task,
+.position,
+.stack,
+.location {
+  composes: password;
+}
+
+.recoveryPassword {
+  background-image: url('../../../images/unlocked.svg');
+}
+
+.name {
+  background-image: url('../../../images/user.svg');
+}
+
+.companyName {
+  background-image: url('../../../images/office.svg');
+}
+
+.URL {
+  background-image: url('../../../images/link.svg');
+}
+
+.phone {
+  background-image: url('../../../images/phone.svg');
+}
+
+.task {
+  background-image: url('../../../images/pushpin.svg');
+}
+
+.position {
+  background-image: url('../../../images/user-tie.svg');
+}
+
+.stack {
+  background-image: url('../../../images/embed2.svg');
+}
+
+.location {
+  background-image: url('../../../images/compass.svg');
+}
