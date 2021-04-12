@@ -13,7 +13,7 @@ export default function MyButton({ title, btnActive }) {
       type="submit"
       disabled={!btnActive || loading}
     >
-      {!loading ? title : <Loader color="#fff" height={24} width={45} />}
+      {!loading ? title : <Loader color="#007bff" height={24} width={45} />}
     </Button>
   );
 }

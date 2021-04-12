@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { onLogout } from '../../store/operations/authOperations';
@@ -5,6 +6,10 @@ import styles from './UserMenu.module.css';
 
 export default function UserMenu({ name, isToken, status }) {
   const dispatch = useDispatch();
+  const [isModal, setIsModal] = useState(false);
+
+  const handleModal = () => setIsModal(!isModal);
+
   const isAdmin = status === 'admin';
 
   const logout = () => dispatch(onLogout());
@@ -12,8 +17,17 @@ export default function UserMenu({ name, isToken, status }) {
     <div className={styles.container}>
       {isToken ? (
         <>
-          {isAdmin && <Link to="/admin">Admin</Link>}
-          <span className={styles.name}>{name}</span>
+          <button type="button" className={styles.name} onClick={handleModal}>
+            {name}
+            {isModal && (
+              <Link
+                className={styles.link}
+                to={isAdmin ? '/admin' : '/details'}
+              >
+                {isAdmin ? 'Admin' : 'Details'}
+              </Link>
+            )}
+          </button>
           <button className={styles.button} type="button" onClick={logout}>
             <span className={styles.buttonTitle}>Logout</span>
           </button>

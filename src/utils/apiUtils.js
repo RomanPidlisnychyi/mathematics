@@ -26,6 +26,12 @@ export const token = {
   },
   unset() {
     localStorage.removeItem('mathematicsTokens');
+
+    axios.defaults.headers = {
+      'Content-Type': 'application/json',
+      Authorization: '',
+      'x-refresh-token': '',
+    };
   },
 };
 

@@ -3,10 +3,20 @@
 }
 
 .name {
+  position: relative;
   color: grey;
+  border: none;
+  outline: none;
   border-right: 1px solid grey;
   padding-right: 15px;
   margin-right: 15px;
+  background-color: transparent;
+}
+
+.link {
+  position: absolute;
+  top: 25px;
+  left: 5px;
 }
 
 .button {
