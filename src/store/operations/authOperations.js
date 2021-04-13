@@ -26,7 +26,6 @@ import {
   login,
   logout,
   current,
-  refresh,
   recovery,
   newPassword,
 } from '../../utils/apiUtils';
@@ -73,19 +72,6 @@ export const onCurrent = tokens => async dispatch => {
   }
 
   dispatch(currentError(payload));
-  dispatch(onCleanMessage());
-};
-
-export const onRefresh = () => async dispatch => {
-  dispatch(refreshRequest());
-  const payload = await refresh();
-
-  if (payload && payload.status && payload.status < 400) {
-    dispatch(refreshSuccess(payload.data.access));
-    return;
-  }
-
-  dispatch(refreshError(payload));
   dispatch(onCleanMessage());
 };
 

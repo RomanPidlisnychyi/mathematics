@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import { getFilter } from '../../../store/selectors/filterSelectors';
 import { setFilter } from '../../../store/actions/filterActions';
-import { onRefresh } from '../../../store/operations/authOperations';
 import styles from './MainInput.module.css';
 
 export default function MainInput({ handleModal }) {
@@ -13,7 +12,7 @@ export default function MainInput({ handleModal }) {
   const handleInput = e => dispatch(setFilter(e.target.value));
 
   const handleBtn = () => {
-    dispatch(onRefresh()).then(handleModal());
+    // dispatch(onRefresh()).then(handleModal());
   };
   return (
     <InputGroup className={styles.input}>

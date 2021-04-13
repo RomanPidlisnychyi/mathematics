@@ -4,9 +4,9 @@ export const getArticlesRequest = createAction('GET_ARTICLES_REQUEST');
 export const getArticlesSuccess = createAction('GET_ARTICLES_SUCCESS');
 export const getArticlesError = createAction('GET_ARTICLES_ERROR');
 
-export const addArticleRequest = createAction('ADD_ARTICLE_REQUEST');
-export const addArticleSuccess = createAction('ADD_ARTICLE_SUCCESS');
-export const addArticleError = createAction('ADD_ARTICLE_ERROR');
+export const createArticleRequest = createAction('CREATE_ARTICLE_REQUEST');
+export const createArticleSuccess = createAction('CREATE_ARTICLE_SUCCESS');
+export const createArticleError = createAction('CREATE_ARTICLE_ERROR');
 
 export const updateArticleRequest = createAction('UPDATE_ARTICLE_REQUEST');
 export const updateArticleSuccess = createAction('UPDATE_ARTICLE_SUCCESS');

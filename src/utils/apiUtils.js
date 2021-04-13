@@ -79,30 +79,11 @@ export const current = async tokens => {
 
     const { access: accessToken } = response.data;
     if (accessToken) {
-      token.setTokens({ access: accessToken, refresh });
+      token.setAccessToken(accessToken);
       tokens = { ...tokens, access: accessToken };
     }
 
     return { user: response.data.user, tokens };
-  } catch (err) {
-    token.unset();
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
-
-export const refresh = async () => {
-  try {
-    const response = await axios.get('/auth/refresh');
-    const { access } = response.data;
-
-    if (access) {
-      token.setAccessToken(access);
-    }
-
-    return response;
   } catch (err) {
     token.unset();
     if (err.response && err.response.data && err.response.data.message) {
@@ -132,6 +113,37 @@ export const newPassword = async credentials => {
     const { password } = credentials;
 
     return { ...response.data, password };
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const getArticles = async () => {
+  try {
+    const response = await axios.get('/articles');
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const createArticle = async credentials => {
+  try {
+    const response = await axios.post('/articles', credentials);
+
+    const accessToken = response.data.accessToken;
+    if (accessToken) {
+      token.setAccessToken(accessToken);
+    }
+
+    return response;
   } catch (err) {
     if (err.response && err.response.data && err.response.data.message) {
       return err.response.data.message;

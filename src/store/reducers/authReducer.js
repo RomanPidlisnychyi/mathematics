@@ -16,6 +16,7 @@ import {
   setMessage,
   cleanMessage,
 } from '../actions/authActions';
+import { getArticlesSuccess } from '../actions/articleActions';
 
 const initialUserState = {
   name: null,
@@ -43,6 +44,8 @@ const tokens = createReducer(initialTokensState, {
   [currentSuccess]: (_, { payload }) => payload.tokens,
   [refreshSuccess]: (state, { payload }) =>
     payload ? { ...state, access: payload } : state,
+  [getArticlesSuccess]: (state, { payload }) =>
+    payload.accessToken ? { ...state, access: payload.accessToken } : state,
   [currentError]: () => initialTokensState,
   [logoutSuccess]: () => initialTokensState,
   [refreshError]: () => initialTokensState,
