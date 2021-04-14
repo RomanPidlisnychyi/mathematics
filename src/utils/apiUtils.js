@@ -152,6 +152,32 @@ export const createArticle = async credentials => {
   }
 };
 
+export const getSections = async articleId => {
+  try {
+    const response = await axios.get(`/sections/${articleId}`);
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const createSection = async ({ name, articleId }) => {
+  try {
+    const response = await axios.post(`/sections/${articleId}`, { name });
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
 export const addTest = async test => {
   try {
     const response = await axios.post('/tests', test);

@@ -9,9 +9,6 @@ import {
   currentRequest,
   currentSuccess,
   currentError,
-  refreshRequest,
-  refreshSuccess,
-  refreshError,
   recoveryRequest,
   recoverySuccess,
   recoveryError,
@@ -21,6 +18,7 @@ import {
   setMessage,
   cleanMessage,
 } from '../actions/authActions';
+import { onGetArticles } from './articleOperations';
 import {
   register,
   login,
@@ -66,6 +64,7 @@ export const onLogout = () => dispatch => {
 export const onCurrent = tokens => async dispatch => {
   dispatch(currentRequest());
   const payload = await current(tokens);
+  dispatch(onGetArticles());
   if (payload.user) {
     dispatch(currentSuccess(payload));
     return;

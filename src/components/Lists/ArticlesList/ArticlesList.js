@@ -9,7 +9,7 @@ export default function ArticlesList() {
       <ul>
         {articles.map(({ _id, name }) => (
           <li key={_id}>
-            <Link to={`/articles/${name}`}>{name}</Link>
+            <Link to={`/articles/${_id}`}>{name}</Link>
           </li>
         ))}
       </ul>

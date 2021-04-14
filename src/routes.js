@@ -61,4 +61,16 @@ export const routes = [
       import('./view/ArticlesView' /* webpackChunkName: "articles-view" */)
     ),
   },
+  {
+    path: '/articles/:id',
+    label: 'ArticleDetail',
+    exact: false,
+    pablic: true,
+    restricted: false,
+    component: lazy(() =>
+      import(
+        './view/ArticleDetailView' /* webpackChunkName: "article-detail-view" */
+      )
+    ),
+  },
 ];

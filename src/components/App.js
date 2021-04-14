@@ -24,8 +24,10 @@ export default function App() {
   }, [dispatch, name, tokens]);
 
   useEffect(() => {
-    dispatch(onGetArticles());
-  }, [dispatch]);
+    if (!tokens) {
+      dispatch(onGetArticles());
+    }
+  }, [dispatch, tokens]);
 
   return (
     <Layout>

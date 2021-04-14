@@ -5,7 +5,7 @@ import { onLogin } from '../../../store/operations/authOperations';
 import { inputs } from '../../../inputs';
 import styles from '../SingUpForm/SingUpForm.module.css';
 
-export default function CreateArticleForm() {
+export default function CreateArticleSectionForm() {
   const myInput = inputs.find(input => input.name === 'name');
   return (
     <Form className={styles.form}>
