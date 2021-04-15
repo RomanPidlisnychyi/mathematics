@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ArticlesList } from '../Lists';
+import { TemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
-import { onCreateArticle } from '../../store/operations/articleOperations';
-import styles from './Article.module.css';
+import { getArticleById } from '../../store/selectors/articleSelectors';
+import { onCreateSection } from '../../store/operations/sectionOperations';
+import { onGetSections } from '../../store/operations/sectionOperations';
+import styles from './Section.module.css';
 
-export default function Article({ location }) {
+export default function Section({ match, location }) {
+  const articleId = match.params.id;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
+  const article = useSelector(state => getArticleById(state, articleId));
+  useEffect(() => {
+    if (articleId) {
+      dispatch(onGetSections(articleId));
+    }
+  }, [dispatch, articleId]);
 
   const handleBtn = () => setIsModal(!isModal);
   const handleSubmit = () => {
@@ -25,7 +34,7 @@ export default function Article({ location }) {
       credantials = { ...credantials, [name]: value };
     });
 
-    dispatch(onCreateArticle(credantials)).then(response => {
+    dispatch(onCreateSection({ ...credantials, articleId })).then(response => {
       if (response) {
         setIsModal(false);
       }
@@ -33,12 +42,12 @@ export default function Article({ location }) {
   };
   return (
     <div className={styles.container}>
-      <h3>Articles</h3>
-      <ArticlesList {...location} />
+      <h3>{article && article.name}</h3>
+      <TemesList {...location} />
       {isAdmin &&
         (isModal ? (
           <MyModal
-            title={'Article'}
+            title={'Section'}
             handleSubmit={handleSubmit}
             handleModal={handleBtn}
           >
@@ -46,7 +55,7 @@ export default function Article({ location }) {
           </MyModal>
         ) : (
           <button type="button" onClick={handleBtn}>
-            add article
+            add section
           </button>
         ))}
     </div>

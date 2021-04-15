@@ -28,7 +28,7 @@ export const onCreateSection = credentials => async dispatch => {
 
   if (payload && payload.status < 400) {
     dispatch(createSectionSuccess(payload.data));
-    return;
+    return payload;
   }
 
   dispatch(createSectionError(payload));

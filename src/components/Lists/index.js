@@ -1,2 +1,3 @@
 export { default as ArticlesList } from './ArticlesList/ArticlesList';
 export { default as SectionsList } from './SectionsList/SectionsList';
+export { default as TemesList } from './TemesList/TemesList';

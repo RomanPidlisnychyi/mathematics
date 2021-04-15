@@ -9,7 +9,7 @@ import { onCreateSection } from '../../store/operations/sectionOperations';
 import { onGetSections } from '../../store/operations/sectionOperations';
 import styles from './Article.module.css';
 
-export default function Article({ match }) {
+export default function Article({ match, location }) {
   const articleId = match.params.id;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
@@ -34,7 +34,7 @@ export default function Article({ match }) {
       credantials = { ...credantials, [name]: value };
     });
 
-    dispatch(onCreateSection(credantials)).then(response => {
+    dispatch(onCreateSection({ ...credantials, articleId })).then(response => {
       if (response) {
         setIsModal(false);
       }
@@ -43,7 +43,7 @@ export default function Article({ match }) {
   return (
     <div className={styles.container}>
       <h3>{article && article.name}</h3>
-      <SectionsList />
+      <SectionsList {...location} />
       {isAdmin &&
         (isModal ? (
           <MyModal
