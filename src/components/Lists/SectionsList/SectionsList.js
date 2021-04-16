@@ -1,26 +1,24 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { onGetSections } from '../../../store/operations/sectionOperations';
-// import { getSections } from '../../../store/selectors/sectionSelectors';
+import { getArticleById } from '../../../store/selectors/articleSelectors';
 
 export default function SectionsList({ pathname, articleId }) {
   const dispatch = useDispatch();
-  const [sections, setSections] = useState(null);
+  const article = useSelector(state => getArticleById(state, articleId));
 
-  // const sections = useSelector(getSections);
   useEffect(() => {
-    if (articleId) {
-      dispatch(onGetSections(articleId)).then(response =>
-        setSections(response)
-      );
+    if (articleId && article && !article.sections) {
+      dispatch(onGetSections(articleId));
     }
-  }, [dispatch, articleId]);
+  }, [dispatch, articleId, article]);
 
   return (
     <ul>
-      {sections &&
-        sections.map(({ _id, name }) => (
+      {article &&
+        article.sections &&
+        article.sections.map(({ _id, name }) => (
           <li key={_id}>
             <Link to={`${pathname}/${_id}`}>{name}</Link>
           </li>

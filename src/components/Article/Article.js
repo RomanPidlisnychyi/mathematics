@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SectionsList } from '../Lists';
 import { MyModal } from '../Modal';
@@ -6,7 +6,6 @@ import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { getArticleById } from '../../store/selectors/articleSelectors';
 import { onCreateSection } from '../../store/operations/sectionOperations';
-// import { onGetSections } from '../../store/operations/sectionOperations';
 import styles from './Article.module.css';
 
 export default function Article({ match, location }) {
@@ -17,13 +16,9 @@ export default function Article({ match, location }) {
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
   const article = useSelector(state => getArticleById(state, articleId));
-  // useEffect(() => {
-  //   if (articleId) {
-  //     dispatch(onGetSections(articleId));
-  //   }
-  // }, [dispatch, articleId]);
 
   const handleBtn = () => setIsModal(!isModal);
+
   const handleSubmit = () => {
     let credantials;
 

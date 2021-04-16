@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TemesList } from '../Lists';
+// import { TemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
@@ -43,7 +43,7 @@ export default function Section({ match, location }) {
   return (
     <div className={styles.container}>
       <h3>{article && article.name}</h3>
-      <TemesList {...location} />
+      {/* <TemesList {...location} /> */}
       {isAdmin &&
         (isModal ? (
           <MyModal
