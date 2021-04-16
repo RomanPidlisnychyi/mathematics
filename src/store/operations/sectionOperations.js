@@ -15,7 +15,7 @@ export const onGetSections = articleId => async dispatch => {
 
   if (payload && payload.status < 400) {
     dispatch(getSectionSuccess(payload.data));
-    return;
+    return payload.data.sections;
   }
 
   dispatch(getSectionError(payload));

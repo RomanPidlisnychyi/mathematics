@@ -1,16 +1,14 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getArticles } from '../../../store/selectors/articleSelectors';
+import { ArticlesListItem } from './ArticlesListItem';
 
-export default function ArticlesList({ pathname }) {
+export default function ArticlesList({ pathname = '/articles' }) {
   const articles = useSelector(getArticles);
   return (
     articles && (
       <ul>
-        {articles.map(({ _id, name }) => (
-          <li key={_id}>
-            <Link to={`${pathname}/${_id}`}>{name}</Link>
-          </li>
+        {articles.map(item => (
+          <ArticlesListItem key={item._id} item={item} pathname={pathname} />
         ))}
       </ul>
     )

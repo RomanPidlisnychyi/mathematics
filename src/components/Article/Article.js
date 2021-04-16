@@ -6,7 +6,7 @@ import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { getArticleById } from '../../store/selectors/articleSelectors';
 import { onCreateSection } from '../../store/operations/sectionOperations';
-import { onGetSections } from '../../store/operations/sectionOperations';
+// import { onGetSections } from '../../store/operations/sectionOperations';
 import styles from './Article.module.css';
 
 export default function Article({ match, location }) {
@@ -17,11 +17,11 @@ export default function Article({ match, location }) {
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
   const article = useSelector(state => getArticleById(state, articleId));
-  useEffect(() => {
-    if (articleId) {
-      dispatch(onGetSections(articleId));
-    }
-  }, [dispatch, articleId]);
+  // useEffect(() => {
+  //   if (articleId) {
+  //     dispatch(onGetSections(articleId));
+  //   }
+  // }, [dispatch, articleId]);
 
   const handleBtn = () => setIsModal(!isModal);
   const handleSubmit = () => {
@@ -43,7 +43,7 @@ export default function Article({ match, location }) {
   return (
     <div className={styles.container}>
       <h3>{article && article.name}</h3>
-      <SectionsList {...location} />
+      <SectionsList {...location} articleId={articleId} />
       {isAdmin &&
         (isModal ? (
           <MyModal
