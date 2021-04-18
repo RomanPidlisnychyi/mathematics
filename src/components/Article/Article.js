@@ -38,7 +38,7 @@ export default function Article({ match, location }) {
   return (
     <div className={styles.container}>
       <h3>{article && article.name}</h3>
-      <SectionsList {...location} articleId={articleId} />
+      <SectionsList {...location} article={article} />
       {isAdmin &&
         (isModal ? (
           <MyModal

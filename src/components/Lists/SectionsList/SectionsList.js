@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { onGetSections } from '../../../store/operations/sectionOperations';
-import { getArticleById } from '../../../store/selectors/articleSelectors';
 
-export default function SectionsList({ pathname, articleId }) {
+export default function SectionsList({ pathname, article }) {
   const dispatch = useDispatch();
-  const article = useSelector(state => getArticleById(state, articleId));
 
   useEffect(() => {
-    if (articleId && article && !article.sections) {
-      dispatch(onGetSections(articleId));
+    if (article && !article.sections) {
+      dispatch(onGetSections(article._id));
     }
-  }, [dispatch, articleId, article]);
+  }, [dispatch, article]);
 
   return (
     <ul>

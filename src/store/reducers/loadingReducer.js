@@ -20,7 +20,7 @@ import {
   newPasswordError,
 } from '../actions/authActions';
 
-const loading = createReducer(false, {
+export const loading = createReducer(false, {
   [registerRequest]: () => true,
   [registerSuccess]: () => false,
   [registerError]: () => false,
@@ -40,5 +40,3 @@ const loading = createReducer(false, {
   [newPasswordSuccess]: () => false,
   [newPasswordError]: () => false,
 });
-
-export default loading;

@@ -4,24 +4,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
-import { getArticleById } from '../../store/selectors/articleSelectors';
-import { onCreateSection } from '../../store/operations/sectionOperations';
-import { onGetSections } from '../../store/operations/sectionOperations';
+import { getSectionById } from '../../store/selectors/sectionSelectors';
+// import { onCreateSection } from '../../store/operations/sectionOperations';
+// import { onGetSections } from '../../store/operations/sectionOperations';
 import styles from './Section.module.css';
 
 export default function Section({ match, location }) {
-  const articleId = match.params.id;
+  const sectionId = match.params.id;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
-  const article = useSelector(state => getArticleById(state, articleId));
-  useEffect(() => {
-    if (articleId) {
-      dispatch(onGetSections(articleId));
-    }
-  }, [dispatch, articleId]);
+  const section = useSelector(state => getSectionById(state, sectionId));
+  // useEffect(() => {
+  //   if (sectionId) {
+  //     dispatch(onGetSections(sectionId));
+  //   }
+  // }, [dispatch, sectionId]);
 
   const handleBtn = () => setIsModal(!isModal);
   const handleSubmit = () => {
@@ -34,20 +34,20 @@ export default function Section({ match, location }) {
       credantials = { ...credantials, [name]: value };
     });
 
-    dispatch(onCreateSection({ ...credantials, articleId })).then(response => {
-      if (response) {
-        setIsModal(false);
-      }
-    });
+    // dispatch(onCreateTeme({ ...credantials, sectionId })).then(response => {
+    //   if (response) {
+    //     setIsModal(false);
+    //   }
+    // });
   };
   return (
     <div className={styles.container}>
-      <h3>{article && article.name}</h3>
+      <h3>{section && section.name}</h3>
       {/* <TemesList {...location} /> */}
       {isAdmin &&
         (isModal ? (
           <MyModal
-            title={'Section'}
+            title={'Teme'}
             handleSubmit={handleSubmit}
             handleModal={handleBtn}
           >
@@ -55,7 +55,7 @@ export default function Section({ match, location }) {
           </MyModal>
         ) : (
           <button type="button" onClick={handleBtn}>
-            add section
+            add theme
           </button>
         ))}
     </div>
