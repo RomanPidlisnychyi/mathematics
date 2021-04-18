@@ -9,7 +9,7 @@ import { onCreateSection } from '../../store/operations/sectionOperations';
 import styles from './Article.module.css';
 
 export default function Article({ match, location }) {
-  const articleId = match.params.id;
+  const articleId = match.params.articleId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
@@ -38,7 +38,7 @@ export default function Article({ match, location }) {
   return (
     <div className={styles.container}>
       <h3>{article && article.name}</h3>
-      <SectionsList {...location} article={article} />
+      <SectionsList {...location} articleId={articleId} />
       {isAdmin &&
         (isModal ? (
           <MyModal

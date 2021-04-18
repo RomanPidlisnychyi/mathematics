@@ -4,23 +4,27 @@ import { TemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
-import { getSectionById } from '../../store/selectors/sectionSelectors';
+import { getSectionsByArticleId } from '../../store/selectors/sectionSelectors';
+import { getThemeById } from '../../store/selectors/themeSelectors';
 import { onGetSections } from '../../store/operations/sectionOperations';
 import { onCreateTheme } from '../../store/operations/themeOperations';
-import styles from './Section.module.css';
+import styles from './Theme.module.css';
 
-export default function Section({ match, location }) {
+export default function Theme({ match, location }) {
   const articleId = match.params.articleId;
-  const sectionId = match.params.sectionId;
+  const themeId = match.params.themeId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
-  const section = useSelector(state => getSectionById(state, sectionId));
+  const sections = useSelector(state =>
+    getSectionsByArticleId(state, articleId)
+  );
+  const theme = useSelector(state => getThemeById(state, themeId));
 
   useEffect(() => {
-    if (!section) {
+    if (sections && !sections.length) {
       dispatch(onGetSections(articleId));
     }
   }, [dispatch, articleId]);
@@ -44,7 +48,7 @@ export default function Section({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      <h3>{section && section.name}</h3>
+      <h3>{theme && theme.name}</h3>
       <TemesList {...location} sectionId={sectionId} />
       {isAdmin &&
         (isModal ? (

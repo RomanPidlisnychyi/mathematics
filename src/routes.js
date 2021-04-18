@@ -62,7 +62,7 @@ export const routes = [
     ),
   },
   {
-    path: '/articles/:id/:sectionId',
+    path: '/articles/:articleId/:sectionId',
     label: 'SectionDetail',
     exact: false,
     pablic: true,
@@ -74,7 +74,7 @@ export const routes = [
     ),
   },
   {
-    path: '/articles/:id',
+    path: '/articles/:articleId',
     label: 'ArticleDetail',
     exact: false,
     pablic: true,

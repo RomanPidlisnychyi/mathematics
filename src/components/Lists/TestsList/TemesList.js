@@ -8,10 +8,8 @@ export default function TemesList({ pathname, sectionId }) {
   const dispatch = useDispatch();
   const themes = useSelector(state => getThemesBySectionId(state, sectionId));
   useEffect(() => {
-    if (themes && !themes.length) {
-      dispatch(onGetThemes(sectionId));
-    }
-  }, [dispatch, sectionId]);
+    dispatch(onGetThemes(sectionId));
+  }, [dispatch]);
 
   return (
     <ul>
