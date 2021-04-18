@@ -1,24 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { onGetSections } from '../../../store/operations/sectionOperations';
-import { getArticleById } from '../../../store/selectors/articleSelectors';
+import { onGetThemes } from '../../../store/operations/themeOperations';
 
-export default function TemesList({ pathname, articleId }) {
+export default function TemesList({ pathname, section }) {
   const dispatch = useDispatch();
-  const article = useSelector(state => getArticleById(state, articleId));
 
   useEffect(() => {
-    if (articleId && article && !article.sections) {
-      dispatch(onGetSections(articleId));
+    if (section && !section.themes) {
+      dispatch(onGetThemes(section._id));
     }
-  }, [dispatch, articleId, article]);
+  }, [dispatch, section]);
 
   return (
     <ul>
-      {article &&
-        article.sections &&
-        article.sections.map(({ _id, name }) => (
+      {section &&
+        section.themes &&
+        section.themes.map(({ _id, name }) => (
           <li key={_id}>
             <Link to={`${pathname}/${_id}`}>{name}</Link>
           </li>

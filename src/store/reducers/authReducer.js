@@ -18,7 +18,7 @@ import {
 } from '../actions/authActions';
 import { createArticleSuccess } from '../actions/articleActions';
 import {
-  getSectionSuccess,
+  getSectionsSuccess,
   createSectionSuccess,
 } from '../actions/sectionActions';
 
@@ -50,7 +50,7 @@ const tokens = createReducer(initialTokensState, {
     payload ? { ...state, access: payload } : state,
   [createArticleSuccess]: (state, { payload }) =>
     payload.accessToken ? { ...state, access: payload.accessToken } : state,
-  [getSectionSuccess]: (state, { payload }) =>
+  [getSectionsSuccess]: (state, { payload }) =>
     payload.accessToken ? { ...state, access: payload.accessToken } : state,
   [createSectionSuccess]: (state, { payload }) =>
     payload.accessToken ? { ...state, access: payload.accessToken } : state,

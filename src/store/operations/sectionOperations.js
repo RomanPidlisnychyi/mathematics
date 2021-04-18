@@ -1,7 +1,7 @@
 import {
-  getSectionRequest,
-  getSectionSuccess,
-  getSectionError,
+  getSectionsRequest,
+  getSectionsSuccess,
+  getSectionsError,
   createSectionRequest,
   createSectionSuccess,
   createSectionError,
@@ -9,16 +9,16 @@ import {
 import { getSections, createSection } from '../../utils/apiUtils';
 
 export const onGetSections = articleId => async dispatch => {
-  dispatch(getSectionRequest());
+  dispatch(getSectionsRequest());
 
   const payload = await getSections(articleId);
 
   if (payload && payload.status < 400) {
-    dispatch(getSectionSuccess(payload.data));
+    dispatch(getSectionsSuccess(payload.data));
     return payload.data.sections;
   }
 
-  dispatch(getSectionError(payload));
+  dispatch(getSectionsError(payload));
 };
 
 export const onCreateSection = credentials => async dispatch => {

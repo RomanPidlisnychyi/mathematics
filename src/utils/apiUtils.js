@@ -178,6 +178,32 @@ export const createSection = async ({ name, articleId }) => {
   }
 };
 
+export const getThemes = async sectionId => {
+  try {
+    const response = await axios.get(`/themes/${sectionId}`);
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const createTheme = async ({ name, sectionId }) => {
+  try {
+    const response = await axios.post(`/themes/${sectionId}`, { name });
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
 export const addTest = async test => {
   try {
     const response = await axios.post('/tests', test);

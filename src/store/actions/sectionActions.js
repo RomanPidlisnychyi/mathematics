@@ -1,8 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const getSectionRequest = createAction('GET_SECTION_REQUEST');
-export const getSectionSuccess = createAction('GET_SECTION_SUCCESS');
-export const getSectionError = createAction('GET_SECTION_ERROR');
+export const getSectionsRequest = createAction('GET_SECTIONS_REQUEST');
+export const getSectionsSuccess = createAction('GET_SECTIONS_SUCCESS');
+export const getSectionsError = createAction('GET_SECTIONS_ERROR');
 
 export const createSectionRequest = createAction('CREATE_SECTION_REQUEST');
 export const createSectionSuccess = createAction('CREATE_SECTION_SUCCESS');

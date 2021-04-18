@@ -1,27 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { TemesList } from '../Lists';
+import { TemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { getSectionById } from '../../store/selectors/sectionSelectors';
-// import { onCreateSection } from '../../store/operations/sectionOperations';
-// import { onGetSections } from '../../store/operations/sectionOperations';
+import { onCreateTheme } from '../../store/operations/themeOperations';
+import { onGetSections } from '../../store/operations/sectionOperations';
 import styles from './Section.module.css';
 
 export default function Section({ match, location }) {
-  const sectionId = match.params.id;
+  const articleId = match.params.id;
+  const sectionId = match.params.sectionId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
   const section = useSelector(state => getSectionById(state, sectionId));
-  // useEffect(() => {
-  //   if (sectionId) {
-  //     dispatch(onGetSections(sectionId));
-  //   }
-  // }, [dispatch, sectionId]);
+
+  useEffect(() => {
+    if (sectionId && !section) {
+      dispatch(onGetSections(articleId));
+    }
+  }, [dispatch, section, articleId, sectionId]);
 
   const handleBtn = () => setIsModal(!isModal);
   const handleSubmit = () => {
@@ -34,16 +36,16 @@ export default function Section({ match, location }) {
       credantials = { ...credantials, [name]: value };
     });
 
-    // dispatch(onCreateTeme({ ...credantials, sectionId })).then(response => {
-    //   if (response) {
-    //     setIsModal(false);
-    //   }
-    // });
+    dispatch(onCreateTheme({ ...credantials, sectionId })).then(response => {
+      if (response) {
+        setIsModal(false);
+      }
+    });
   };
   return (
     <div className={styles.container}>
       <h3>{section && section.name}</h3>
-      {/* <TemesList {...location} /> */}
+      <TemesList {...location} section={section} />
       {isAdmin &&
         (isModal ? (
           <MyModal
