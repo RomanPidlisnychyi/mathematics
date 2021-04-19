@@ -1,67 +1,68 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TemesList } from '../Lists';
+import { TestsList } from '../Lists';
+import { SimpleTest } from '../SimpleTest';
 import { MyModal } from '../Modal';
-import { CreateArticleSectionForm } from '../Forms';
+import { Title } from '../Title';
 import { getStatus } from '../../store/selectors/authSelectors';
-import { getSectionsByArticleId } from '../../store/selectors/sectionSelectors';
 import { getThemeById } from '../../store/selectors/themeSelectors';
+import { getTest } from '../../store/selectors/testSelectors';
 import { onGetSections } from '../../store/operations/sectionOperations';
-import { onCreateTheme } from '../../store/operations/themeOperations';
+import { onGetThemes } from '../../store/operations/themeOperations';
+import { onCreateTest } from '../../store/operations/testOperations';
+import { cleanTestState } from '../../store/actions/testActions';
 import styles from './Theme.module.css';
 
 export default function Theme({ match, location }) {
   const articleId = match.params.articleId;
+  const sectionId = match.params.sectionId;
   const themeId = match.params.themeId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
   const status = useSelector(getStatus);
+  const test = useSelector(getTest);
   const isAdmin = status === 'admin';
-  const sections = useSelector(state =>
-    getSectionsByArticleId(state, articleId)
-  );
   const theme = useSelector(state => getThemeById(state, themeId));
 
   useEffect(() => {
-    if (sections && !sections.length) {
+    if (!theme) {
       dispatch(onGetSections(articleId));
+      dispatch(onGetThemes(sectionId));
     }
-  }, [dispatch, articleId]);
+  }, [dispatch, articleId, sectionId, theme]);
 
-  const handleBtn = () => setIsModal(!isModal);
+  const handleBtn = () => {
+    if (isModal) {
+      dispatch(cleanTestState());
+    }
+    setIsModal(!isModal);
+  };
+
   const handleSubmit = () => {
-    let credantials;
-
-    const allInputs = document.querySelectorAll('input');
-
-    allInputs.forEach(input => {
-      const { name, value } = input;
-      credantials = { ...credantials, [name]: value };
-    });
-
-    dispatch(onCreateTheme({ ...credantials, sectionId })).then(response => {
+    dispatch(onCreateTest({ test, themeId })).then(response => {
       if (response) {
         setIsModal(false);
+        dispatch(cleanTestState());
       }
     });
   };
   return (
     <div className={styles.container}>
-      <h3>{theme && theme.name}</h3>
-      <TemesList {...location} sectionId={sectionId} />
+      <Title match={match} />
+      <TestsList {...location} themeId={themeId} />
       {isAdmin &&
         (isModal ? (
           <MyModal
-            title={'Teme'}
+            title={'Test'}
             handleSubmit={handleSubmit}
             handleModal={handleBtn}
           >
-            <CreateArticleSectionForm />
+            <SimpleTest />
           </MyModal>
         ) : (
           <button type="button" onClick={handleBtn}>
-            add theme
+            add test
           </button>
         ))}
     </div>

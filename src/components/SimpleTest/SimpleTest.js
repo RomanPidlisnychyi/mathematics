@@ -1,32 +1,31 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setQuestionSuccess,
+  setAnswerSuccess,
+} from '../../store/actions/testActions';
+import { getTest } from '../../store/selectors/testSelectors';
 import { addTest } from '../../utils/apiUtils';
 
 export default function SimpleTest() {
   const dispatch = useDispatch();
 
   const [isInputTypeQuestion, setIsInputTypeQuestion] = useState(false);
-  const [theme, setTheme] = useState('');
   const [question, setQuestion] = useState('');
   const [trueAnswer, setTrueAnswer] = useState('');
   const [answer, setAnswer] = useState([]);
-  const [answers, setAnswers] = useState([]);
-  const [questions, setQuestions] = useState([]);
+  const { answers, questions } = useSelector(getTest);
 
   const handleAdd = () => {
     if (isInputTypeQuestion) {
-      const newQuestions = [...questions, { question, trueAnswer }];
-      const newAnswers = [...answers, trueAnswer];
-
-      setQuestions(newQuestions);
-      setAnswers(newAnswers);
+      dispatch(setQuestionSuccess({ question, trueAnswer }));
+      dispatch(setAnswerSuccess(trueAnswer));
       setQuestion('');
       setTrueAnswer('');
       return;
     }
 
-    const newAnswers = [...answers, answer];
-    setAnswers(newAnswers);
+    dispatch(setAnswerSuccess(answer));
     setAnswer('');
   };
 
@@ -35,11 +34,6 @@ export default function SimpleTest() {
 
     if (name === 'radio') {
       setIsInputTypeQuestion(!isInputTypeQuestion);
-      return;
-    }
-
-    if (name === 'theme') {
-      setTheme(value);
       return;
     }
 
@@ -59,14 +53,8 @@ export default function SimpleTest() {
     }
   };
 
-  const hendleSubmit = e => {
-    e.preventDefault();
-
-    dispatch(addTest({ theme, test: { questions, answers } }));
-  };
-
   return (
-    <form onSubmit={hendleSubmit}>
+    <form>
       <label>
         <input
           type="radio"
@@ -84,11 +72,6 @@ export default function SimpleTest() {
           onChange={handleChange}
         />
         Answer
-      </label>
-      <br />
-      <label>
-        Theme:
-        <input type="text" value={theme} name="theme" onChange={handleChange} />
       </label>
       <br />
       {isInputTypeQuestion ? (
@@ -129,8 +112,6 @@ export default function SimpleTest() {
         add
       </button>
       <div>
-        <h1>Test:</h1>
-        <h2>Theme: {theme}</h2>
         <h3>Questions: </h3>
         <ul>
           {questions.map(question => (
@@ -146,8 +127,6 @@ export default function SimpleTest() {
           ))}
         </ul>
       </div>
-      <br />
-      <button type="submit">Save test</button>
     </form>
   );
 }

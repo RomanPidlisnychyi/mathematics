@@ -25,7 +25,6 @@ export const onCreateTheme = credentials => async dispatch => {
   dispatch(createThemeRequest());
 
   const payload = await createTheme(credentials);
-  console.log('payload', payload);
   if (payload && payload.status < 400) {
     dispatch(createThemeSuccess(payload.data));
     return payload;

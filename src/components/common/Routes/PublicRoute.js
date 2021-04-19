@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { getToken } from '../../../store/selectors/authSelectors';
+import { getName } from '../../../store/selectors/authSelectors';
 
 export default function PablicRoute({
   component: Component,
   restricted,
   ...rest
 }) {
-  const isAuthenticated = useSelector(getToken);
+  const isAuthenticated = useSelector(getName);
   return (
     <Route
       {...rest}

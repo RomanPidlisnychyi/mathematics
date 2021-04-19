@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { SectionsList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
+import { Title } from '../Title';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { getArticleById } from '../../store/selectors/articleSelectors';
 import { onCreateSection } from '../../store/operations/sectionOperations';
@@ -37,7 +38,8 @@ export default function Article({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      <h3>{article && article.name}</h3>
+      {/* <h3>{article && article.name}</h3> */}
+      <Title match={match} />
       <SectionsList {...location} articleId={articleId} />
       {isAdmin &&
         (isModal ? (

@@ -15,7 +15,12 @@ export const token = {
 
     localStorage.setItem('mathematicsTokens', JSON.stringify(tokens));
   },
-  setAccessToken(access) {
+  setAccessToken(response) {
+    const access = response.data.accessToken;
+    if (!access) {
+      return;
+    }
+
     const { refresh } = token.getLocalTokens();
     token.setTokens({ access, refresh });
   },
@@ -57,7 +62,7 @@ export const login = async credentials => {
     const { tokens } = response.data;
     token.setTokens(tokens);
 
-    return response.data;
+    return response;
   } catch (err) {
     console.log('err', err);
     if (err.response && err.response.data && err.response.data.message) {
@@ -77,13 +82,8 @@ export const current = async tokens => {
 
     const response = await axios.get('/auth/current');
 
-    const { access: accessToken } = response.data;
-    if (accessToken) {
-      token.setAccessToken(accessToken);
-      tokens = { ...tokens, access: accessToken };
-    }
-
-    return { user: response.data.user, tokens };
+    token.setAccessToken(response);
+    return response;
   } catch (err) {
     token.unset();
     if (err.response && err.response.data && err.response.data.message) {
@@ -138,10 +138,7 @@ export const createArticle = async credentials => {
   try {
     const response = await axios.post('/articles', credentials);
 
-    const accessToken = response.data.accessToken;
-    if (accessToken) {
-      token.setAccessToken(accessToken);
-    }
+    token.setAccessToken(response);
 
     return response;
   } catch (err) {
@@ -156,6 +153,8 @@ export const getSections = async articleId => {
   try {
     const response = await axios.get(`/sections/${articleId}`);
 
+    token.setAccessToken(response);
+
     return response;
   } catch (err) {
     if (err.response && err.response.data && err.response.data.message) {
@@ -168,6 +167,8 @@ export const getSections = async articleId => {
 export const createSection = async ({ name, articleId }) => {
   try {
     const response = await axios.post(`/sections/${articleId}`, { name });
+
+    token.setAccessToken(response);
 
     return response;
   } catch (err) {
@@ -182,6 +183,8 @@ export const getThemes = async sectionId => {
   try {
     const response = await axios.get(`/themes/${sectionId}`);
 
+    token.setAccessToken(response);
+
     return response;
   } catch (err) {
     if (err.response && err.response.data && err.response.data.message) {
@@ -195,6 +198,8 @@ export const createTheme = async ({ name, sectionId }) => {
   try {
     const response = await axios.post(`/themes/${sectionId}`, { name });
 
+    token.setAccessToken(response);
+
     return response;
   } catch (err) {
     if (err.response && err.response.data && err.response.data.message) {
@@ -204,13 +209,27 @@ export const createTheme = async ({ name, sectionId }) => {
   }
 };
 
-export const addTest = async test => {
+export const getTests = async themeId => {
   try {
-    const response = await axios.post('/tests', test);
+    const response = await axios.get(`/tests/${themeId}`);
 
-    console.log('response', response);
+    token.setAccessToken(response);
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
 
-    // return { ...response.data, password };
+export const createTest = async ({ themeId, test }) => {
+  try {
+    const response = await axios.post(`/tests/${themeId}`, test);
+
+    token.setAccessToken(response);
+
+    return response;
   } catch (err) {
     if (err.response && err.response.data && err.response.data.message) {
       return err.response.data.message;

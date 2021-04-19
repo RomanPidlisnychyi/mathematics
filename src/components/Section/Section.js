@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
+import { Title } from '../Title';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { getSectionById } from '../../store/selectors/sectionSelectors';
 import { onGetSections } from '../../store/operations/sectionOperations';
@@ -44,7 +45,8 @@ export default function Section({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      <h3>{section && section.name}</h3>
+      {/* <h3>{section && section.name}</h3> */}
+      <Title match={match} />
       <TemesList {...location} sectionId={sectionId} />
       {isAdmin &&
         (isModal ? (

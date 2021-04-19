@@ -47,8 +47,8 @@ export const onRegister = credentials => async dispatch => {
 export const onLogin = credentials => async dispatch => {
   dispatch(loginRequest());
   const payload = await login(credentials);
-  if (payload.user) {
-    dispatch(loginSuccess(payload));
+  if (payload.status < 400) {
+    dispatch(loginSuccess(payload.data.user));
     return;
   }
 
@@ -65,8 +65,8 @@ export const onCurrent = tokens => async dispatch => {
   dispatch(currentRequest());
   const payload = await current(tokens);
   dispatch(onGetArticles());
-  if (payload.user) {
-    dispatch(currentSuccess(payload));
+  if (payload.status < 400) {
+    dispatch(currentSuccess(payload.data.user));
     return;
   }
 

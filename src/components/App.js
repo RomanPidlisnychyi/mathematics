@@ -10,7 +10,6 @@ import { onCurrent } from '../store/operations/authOperations';
 import { onGetArticles } from '../store/operations/articleOperations';
 import { getName } from '../store/selectors/authSelectors';
 import { token } from '../utils/apiUtils';
-// import SimpleTest from './SimpleTest/SimpleTest';
 
 export default function App() {
   const dispatch = useDispatch();
