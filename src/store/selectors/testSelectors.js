@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 export const getTest = state => state.test;
 export const getTests = state => state.tests;
+export const getTesting = state => state.testing;
 
 export const getTestsByThemeId = createSelector(
   getTests,

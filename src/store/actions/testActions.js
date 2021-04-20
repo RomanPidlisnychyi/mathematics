@@ -11,3 +11,17 @@ export const getTestsError = createAction('GET_TESTS_ERROR');
 export const createTestRequest = createAction('CREATE_TEST_REQUEST');
 export const createTestSuccess = createAction('CREATE_TEST_SUCCESS');
 export const createTestError = createAction('CREATE_TEST_ERROR');
+
+export const getTestingRequest = createAction('GET_TESTING_REQUEST');
+export const getTestingSuccess = createAction('GET_TESTING_SUCCESS');
+export const getTestingError = createAction('GET_TESTING_ERROR');
+
+export const createTestingResultRequest = createAction(
+  'CREATE_TESTING_RESULT_REQUEST'
+);
+export const createTestingResultSuccess = createAction(
+  'CREATE_TESTING_RESULT_SUCCESS'
+);
+export const createTestingResultError = createAction(
+  'CREATE_TESTING_RESULT_ERROR'
+);

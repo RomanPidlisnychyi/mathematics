@@ -7,9 +7,12 @@ import { onGetTests } from '../../../store/operations/testOperations';
 export default function TestsList({ pathname, themeId }) {
   const dispatch = useDispatch();
   const tests = useSelector(state => getTestsByThemeId(state, themeId));
+
   useEffect(() => {
-    dispatch(onGetTests(themeId));
-  }, [dispatch]);
+    if (tests && !tests.length) {
+      dispatch(onGetTests(themeId));
+    }
+  }, [dispatch, themeId]);
 
   return (
     <ul>

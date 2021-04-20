@@ -5,7 +5,6 @@ import {
   setAnswerSuccess,
 } from '../../store/actions/testActions';
 import { getTest } from '../../store/selectors/testSelectors';
-import { addTest } from '../../utils/apiUtils';
 
 export default function SimpleTest() {
   const dispatch = useDispatch();

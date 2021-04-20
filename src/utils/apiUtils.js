@@ -237,3 +237,31 @@ export const createTest = async ({ themeId, test }) => {
     return 'Проверьте интернет';
   }
 };
+
+export const getTesting = async themeId => {
+  try {
+    const response = await axios.get(`/testing/${themeId}`);
+
+    token.setAccessToken(response);
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const createTestingResult = async ({ themeId, testing }) => {
+  try {
+    const response = await axios.post(`/testing/${themeId}`, testing);
+
+    token.setAccessToken(response);
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};

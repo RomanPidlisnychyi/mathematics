@@ -3,14 +3,19 @@ import { combineReducers } from 'redux';
 import {
   getTestsSuccess,
   createTestSuccess,
+  getTestingSuccess,
   setQuestionSuccess,
   setAnswerSuccess,
   cleanTestState,
 } from '../actions/testActions';
 
 export const tests = createReducer([], {
-  [getTestsSuccess]: (_, { payload }) => payload,
+  [getTestsSuccess]: (state, { payload }) => [...state, ...payload],
   [createTestSuccess]: (state, { payload }) => [...state, payload],
+});
+
+export const testing = createReducer([], {
+  [getTestingSuccess]: (_, { payload }) => payload,
 });
 
 const questions = createReducer([], {
