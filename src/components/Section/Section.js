@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TemesList } from '../Lists';
+import { ThemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { Title } from '../Title';
@@ -36,7 +36,7 @@ export default function Section({ match, location }) {
   return (
     <div className={styles.container}>
       <Title match={match} />
-      <TemesList {...location} sectionId={sectionId} />
+      <ThemesList {...location} sectionId={sectionId} />
       {isAdmin &&
         (isModal ? (
           <MyModal

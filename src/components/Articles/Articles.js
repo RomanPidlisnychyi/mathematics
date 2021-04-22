@@ -33,7 +33,6 @@ export default function Article({ location }) {
   };
   return (
     <div className={styles.container}>
-      <h3>Articles</h3>
       <ArticlesList {...location} />
       {isAdmin &&
         (isModal ? (

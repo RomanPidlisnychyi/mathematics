@@ -2,7 +2,7 @@ import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-router-dom';
 import { PublicRoute, PrivateRoute } from './common/Routes';
-import { Layout, ViewLayout } from './Layout';
+import { Layout, Container } from './Layout';
 import { Header } from './Header';
 import { Nav } from './Nav';
 import { routes } from '../routes';
@@ -31,7 +31,7 @@ export default function App() {
   return (
     <Layout>
       <Header />
-      <ViewLayout>
+      <Container>
         <Nav />
         <Suspense fallback={false}>
           <Switch>
@@ -44,7 +44,7 @@ export default function App() {
             )}
           </Switch>
         </Suspense>
-      </ViewLayout>
+      </Container>
     </Layout>
   );
 }
