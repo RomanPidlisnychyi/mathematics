@@ -5,7 +5,6 @@ import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { Title } from '../Title';
 import { getStatus } from '../../store/selectors/authSelectors';
-import { getArticleById } from '../../store/selectors/articleSelectors';
 import { onCreateSection } from '../../store/operations/sectionOperations';
 import styles from './Article.module.css';
 
@@ -16,7 +15,6 @@ export default function Article({ match, location }) {
 
   const status = useSelector(getStatus);
   const isAdmin = status === 'admin';
-  const article = useSelector(state => getArticleById(state, articleId));
 
   const handleBtn = () => setIsModal(!isModal);
 
@@ -38,7 +36,6 @@ export default function Article({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      {/* <h3>{article && article.name}</h3> */}
       <Title match={match} />
       <SectionsList {...location} articleId={articleId} />
       {isAdmin &&

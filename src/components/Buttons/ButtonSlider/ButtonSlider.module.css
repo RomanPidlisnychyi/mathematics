@@ -1,0 +1,11 @@
+.btn {
+  border: none;
+  outline: none;
+  width: 15px;
+  height: 15px;
+  background: url('../../../images/circle-right.svg') center / 100% no-repeat;
+}
+
+.active {
+  background-image: url('../../../images/circle-down.svg');
+}

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { getArticles } from '../../../store/selectors/articleSelectors';
-import { ArticlesListItem } from './ArticlesListItem';
+import ArticlesListItem from './ArticlesListItem/ArticlesListItem';
 import styles from './ArticlesList.module.css';
 
 export default function ArticlesList({ pathname = '/articles' }) {

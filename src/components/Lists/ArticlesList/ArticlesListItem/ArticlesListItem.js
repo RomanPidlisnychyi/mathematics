@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SectionsList } from '../../';
-import styles from './ArticlesListItem.module.css';
+import { ButtonSlider } from '../../../Buttons';
 
 export default function ArticlesListItem({ item, pathname }) {
   const { _id, name } = item;
@@ -10,7 +10,7 @@ export default function ArticlesListItem({ item, pathname }) {
 
   return (
     <li>
-      <button className={styles.btn} type="button" onClick={handleShow} />
+      <ButtonSlider isShow={showList} handleShow={handleShow} />
       <Link to={`${pathname}/${_id}`}>{name}</Link>
       {showList && (
         <SectionsList pathname={`${pathname}/${_id}`} articleId={_id} />

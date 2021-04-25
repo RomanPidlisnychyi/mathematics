@@ -11,5 +11,5 @@
 .viewContainer {
   margin: 0 auto;
   width: 100%;
-  border: 1px solid grey;
+  border-left: 1px solid grey;
 }
