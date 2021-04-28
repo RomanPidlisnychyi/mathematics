@@ -12,6 +12,7 @@ export default function Title({ match }) {
   const articleId = match.params.articleId;
   const sectionId = match.params.sectionId;
   const themeId = match.params.themeId;
+  const isTesting = match.path.includes('/test');
 
   const article = useSelector(state => getArticleById(state, articleId));
   const section = useSelector(state => getSectionById(state, sectionId));
@@ -46,6 +47,15 @@ export default function Title({ match }) {
           -{' '}
           <Link to={`/articles/${articleId}/${sectionId}/${themeId}`}>
             {theme.name}
+          </Link>
+        </span>
+      )}
+      {isTesting && (
+        <span>
+          {' '}
+          -{' '}
+          <Link to={`/articles/${articleId}/${sectionId}/${themeId}/test`}>
+            Тестування
           </Link>
         </span>
       )}

@@ -61,6 +61,7 @@ export const onCreateTestingResult = credentials => async dispatch => {
   dispatch(createTestingResultRequest());
 
   const payload = await createTestingResult(credentials);
+  console.log('payload', payload);
   if (payload.status < 400) {
     dispatch(createTestingResultSuccess(payload.data.test));
     return payload;
