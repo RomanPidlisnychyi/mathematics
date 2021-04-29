@@ -4,6 +4,8 @@ import {
   getTestsSuccess,
   createTestSuccess,
   getTestingSuccess,
+  createTestingResultSuccess,
+  getTestingResultsSuccess,
   setQuestionSuccess,
   setAnswerSuccess,
   cleanTestState,
@@ -16,6 +18,11 @@ export const tests = createReducer([], {
 
 export const testing = createReducer([], {
   [getTestingSuccess]: (_, { payload }) => payload,
+});
+
+export const testingResults = createReducer([], {
+  [createTestingResultSuccess]: (state, { payload }) => [...state, payload],
+  [getTestingResultsSuccess]: (state, { payload }) => [...state, ...payload],
 });
 
 const questions = createReducer([], {

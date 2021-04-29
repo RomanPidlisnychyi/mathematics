@@ -25,3 +25,11 @@ export const createTestingResultSuccess = createAction(
 export const createTestingResultError = createAction(
   'CREATE_TESTING_RESULT_ERROR'
 );
+
+export const getTestingResultsRequest = createAction(
+  'GET_TESTING_RESULTS_REQUEST'
+);
+export const getTestingResultsSuccess = createAction(
+  'GET_TESTING_RESULTS_SUCCESS'
+);
+export const getTestingResultsError = createAction('GET_TESTING_RESULTS_ERROR');

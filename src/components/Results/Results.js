@@ -9,9 +9,9 @@ import { getStatus } from '../../store/selectors/authSelectors';
 import { getTest } from '../../store/selectors/testSelectors';
 import { onCreateTest } from '../../store/operations/testOperations';
 import { cleanTestState } from '../../store/actions/testActions';
-import styles from './Theme.module.css';
+import styles from './Results.module.css';
 
-export default function Theme({ match, location }) {
+export default function Results({ match, location }) {
   const themeId = match.params.themeId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
@@ -53,7 +53,6 @@ export default function Theme({ match, location }) {
             add test
           </button>
         ))}
-      <Link to={`${location.pathname}/results`}>Результати тестів</Link>
       <Link to={`${location.pathname}/test`}>Пройти тест</Link>
     </div>
   );
