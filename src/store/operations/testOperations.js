@@ -3,6 +3,7 @@ import {
   createTest,
   getTesting,
   createTestingResult,
+  getTestingResult,
 } from '../../utils/apiUtils';
 import {
   getTestsRequest,
@@ -17,6 +18,9 @@ import {
   createTestingResultRequest,
   createTestingResultSuccess,
   createTestingResultError,
+  getTestingResultsRequest,
+  getTestingResultsSuccess,
+  getTestingResultsError,
 } from '../actions/testActions';
 
 export const onGetTests = themeId => async dispatch => {
@@ -67,4 +71,16 @@ export const onCreateTestingResult = credentials => async dispatch => {
   }
 
   dispatch(createTestingResultError(payload));
+};
+
+export const onGetTestingResult = themeId => async dispatch => {
+  dispatch(getTestingResultsRequest());
+
+  const payload = await getTestingResult(themeId);
+  if (payload.status < 400) {
+    dispatch(getTestingResultsSuccess(payload.data.results));
+    return payload;
+  }
+
+  dispatch(getTestingResultsError(payload));
 };

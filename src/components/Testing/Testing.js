@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTesting } from '../../store/selectors/testSelectors';
-import { onGetTesting } from '../../store/operations/testOperations';
+import { clearTesting } from '../../store/actions/testActions';
 import { Title } from '../Title';
 import { onCreateTestingResult } from '../../store/operations/testOperations';
 import styles from './Testing.module.css';
@@ -44,7 +44,9 @@ export default function Testing({ match }) {
   };
 
   useEffect(() => {
-    dispatch(onGetTesting(themeId));
+    return () => {
+      dispatch(clearTesting());
+    };
   }, [dispatch]);
   return (
     <div>

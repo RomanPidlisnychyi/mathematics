@@ -4,7 +4,9 @@ import {
   getTestsSuccess,
   createTestSuccess,
   getTestingSuccess,
+  clearTesting,
   createTestingResultSuccess,
+  clearTestingResults,
   getTestingResultsSuccess,
   setQuestionSuccess,
   setAnswerSuccess,
@@ -18,11 +20,13 @@ export const tests = createReducer([], {
 
 export const testing = createReducer([], {
   [getTestingSuccess]: (_, { payload }) => payload,
+  [clearTesting]: () => [],
 });
 
 export const testingResults = createReducer([], {
   [createTestingResultSuccess]: (state, { payload }) => [...state, payload],
-  [getTestingResultsSuccess]: (state, { payload }) => [...state, ...payload],
+  [getTestingResultsSuccess]: (_, { payload }) => payload,
+  [clearTestingResults]: () => [],
 });
 
 const questions = createReducer([], {

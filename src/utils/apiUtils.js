@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 export const token = {
   setTokens(tokens) {
@@ -255,6 +255,20 @@ export const getTesting = async themeId => {
 export const createTestingResult = async ({ themeId, testing }) => {
   try {
     const response = await axios.post(`/testing/${themeId}`, testing);
+
+    token.setAccessToken(response);
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const getTestingResult = async themeId => {
+  try {
+    const response = await axios.get(`/testing/results/${themeId}`);
 
     token.setAccessToken(response);
     return response;

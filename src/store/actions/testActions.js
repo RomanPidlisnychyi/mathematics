@@ -15,6 +15,7 @@ export const createTestError = createAction('CREATE_TEST_ERROR');
 export const getTestingRequest = createAction('GET_TESTING_REQUEST');
 export const getTestingSuccess = createAction('GET_TESTING_SUCCESS');
 export const getTestingError = createAction('GET_TESTING_ERROR');
+export const clearTesting = createAction('CLEAR_TESTING');
 
 export const createTestingResultRequest = createAction(
   'CREATE_TESTING_RESULT_REQUEST'
@@ -33,3 +34,4 @@ export const getTestingResultsSuccess = createAction(
   'GET_TESTING_RESULTS_SUCCESS'
 );
 export const getTestingResultsError = createAction('GET_TESTING_RESULTS_ERROR');
+export const clearTestingResults = createAction('CLEAR_TESTING_RESULTS');
