@@ -78,6 +78,7 @@ export const onGetTestingResult = themeId => async dispatch => {
 
   const payload = await getTestingResult(themeId);
   if (payload.status < 400) {
+    console.log('payload.data.results', payload.data.results);
     dispatch(getTestingResultsSuccess(payload.data.results));
     return payload;
   }

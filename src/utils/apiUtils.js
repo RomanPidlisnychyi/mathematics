@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
-// axios.defaults.baseURL = 'http://localhost:3001';
+// axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
+axios.defaults.baseURL = 'http://localhost:3001';
 
 export const token = {
   setTokens(tokens) {

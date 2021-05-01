@@ -1,0 +1,23 @@
+.item {
+  position: relative;
+  list-style: lower-alpha;
+  padding-left: 20px;
+}
+
+.passed::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  background-color: green;
+}
+
+.rejected {
+  composes: passed;
+}
+
+.rejected::after {
+  background-color: red;
+}

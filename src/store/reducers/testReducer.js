@@ -24,7 +24,7 @@ export const testing = createReducer([], {
 });
 
 export const testingResults = createReducer([], {
-  [createTestingResultSuccess]: (state, { payload }) => [...state, payload],
+  // [createTestingResultSuccess]: (state, { payload }) => [...state, payload],
   [getTestingResultsSuccess]: (_, { payload }) => payload,
   [clearTestingResults]: () => [],
 });

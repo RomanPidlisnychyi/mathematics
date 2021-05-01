@@ -1,17 +1,18 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getTestingResults } from '../../../store/selectors/testSelectors';
+import { getUpdatedTestingResults } from '../../../store/selectors/testSelectors';
 
 export default function ResultsList({ pathname }) {
-  const testingResults = useSelector(getTestingResults);
-
+  const testingResults = useSelector(getUpdatedTestingResults);
   return (
     <ul>
       {testingResults &&
         testingResults.length > 0 &&
-        testingResults.map(({ _id }) => (
-          <li key={_id}>
-            <Link to={`${pathname}/${_id}`}>{_id}</Link>
+        testingResults.map(item => (
+          <li key={item._id}>
+            <Link to={`${pathname}/${item._id}`}>
+              {item.time}/{item.date} TotalScore: {item.totalScore}
+            </Link>
           </li>
         ))}
     </ul>

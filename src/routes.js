@@ -62,6 +62,18 @@ export const routes = [
     ),
   },
   {
+    path: '/articles/:articleId/:sectionId/:themeId/results/:resultId',
+    label: 'ResultDetail',
+    exact: false,
+    pablic: true,
+    restricted: false,
+    component: lazy(() =>
+      import(
+        './view/ResultDetailView' /* webpackChunkName: "result-detail-view" */
+      )
+    ),
+  },
+  {
     path: '/articles/:articleId/:sectionId/:themeId/results',
     label: 'Results',
     exact: false,

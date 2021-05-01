@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import { getArticleById } from '../../store/selectors/articleSelectors';
 import { getSectionById } from '../../store/selectors/sectionSelectors';
 import { getThemeById } from '../../store/selectors/themeSelectors';
+import {
+  getTestingResults,
+  getResultById,
+} from '../../store/selectors/testSelectors';
 import { onGetSections } from '../../store/operations/sectionOperations';
 import { onGetThemes } from '../../store/operations/themeOperations';
 import { onGetTesting } from '../../store/operations/testOperations';
@@ -16,10 +20,13 @@ export default function Title({ match }) {
   const themeId = match.params.themeId;
   const isTesting = match.path.includes('/test');
   const isResults = match.path.includes('/results');
+  const resultId = match.params.resultId;
 
   const article = useSelector(state => getArticleById(state, articleId));
   const section = useSelector(state => getSectionById(state, sectionId));
   const theme = useSelector(state => getThemeById(state, themeId));
+  const testingResults = useSelector(getTestingResults);
+  const result = useSelector(state => getResultById(state, resultId));
 
   useEffect(() => {
     if (sectionId && !section) {
@@ -31,7 +38,10 @@ export default function Title({ match }) {
     if (isTesting) {
       dispatch(onGetTesting(themeId));
     }
-    if (isResults) {
+    if (isResults && !testingResults.length) {
+      dispatch(onGetTestingResult(themeId));
+    }
+    if (resultId && !result) {
       dispatch(onGetTestingResult(themeId));
     }
   }, [dispatch]);
@@ -74,6 +84,17 @@ export default function Title({ match }) {
           -{' '}
           <Link to={`/articles/${articleId}/${sectionId}/${themeId}/results`}>
             Результати
+          </Link>
+        </span>
+      )}
+      {resultId && (
+        <span>
+          {' '}
+          -{' '}
+          <Link
+            to={`/articles/${articleId}/${sectionId}/${themeId}/results/${resultId}`}
+          >
+            Тест
           </Link>
         </span>
       )}
