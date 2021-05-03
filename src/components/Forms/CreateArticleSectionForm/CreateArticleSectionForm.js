@@ -1,7 +1,5 @@
-import { useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { MyInput } from '../../Inputs';
-import { onLogin } from '../../../store/operations/authOperations';
 import { inputs } from '../../../inputs';
 import styles from '../SingUpForm/SingUpForm.module.css';
 

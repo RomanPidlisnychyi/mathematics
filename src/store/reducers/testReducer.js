@@ -5,9 +5,10 @@ import {
   createTestSuccess,
   getTestingSuccess,
   clearTesting,
-  createTestingResultSuccess,
   clearTestingResults,
+  clearTestingResultById,
   getTestingResultsSuccess,
+  getTestingResultByIdSuccess,
   setQuestionSuccess,
   setAnswerSuccess,
   cleanTestState,
@@ -24,9 +25,13 @@ export const testing = createReducer([], {
 });
 
 export const testingResults = createReducer([], {
-  // [createTestingResultSuccess]: (state, { payload }) => [...state, payload],
   [getTestingResultsSuccess]: (_, { payload }) => payload,
   [clearTestingResults]: () => [],
+});
+
+export const testingResult = createReducer(null, {
+  [getTestingResultByIdSuccess]: (_, { payload }) => payload,
+  [clearTestingResultById]: () => null,
 });
 
 const questions = createReducer([], {

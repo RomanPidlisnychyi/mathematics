@@ -53,8 +53,8 @@ export default function Theme({ match, location }) {
             add test
           </button>
         ))}
-      <Link to={`${location.pathname}/results`}>Результати тестів</Link>
-      <Link to={`${location.pathname}/test`}>Пройти тест</Link>
+      <Link to={`${location.pathname}/results`}>тести</Link>
+      {/* <Link to={`${location.pathname}/test`}>Пройти тест</Link> */}
     </div>
   );
 }

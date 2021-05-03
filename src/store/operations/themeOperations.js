@@ -5,8 +5,11 @@ import {
   createThemeRequest,
   createThemeSuccess,
   createThemeError,
+  getThemesByQueryRequest,
+  getThemesByQuerySuccess,
+  getThemesByQueryError,
 } from '../actions/themeActions';
-import { getThemes, createTheme } from '../../utils/apiUtils';
+import { getThemes, createTheme, getThemesByQuery } from '../../utils/apiUtils';
 
 export const onGetThemes = sectionId => async dispatch => {
   dispatch(getThemesRequest());
@@ -31,4 +34,17 @@ export const onCreateTheme = credentials => async dispatch => {
   }
 
   dispatch(createThemeError(payload));
+};
+
+export const onGetThemesByQuery = query => async dispatch => {
+  dispatch(getThemesByQueryRequest());
+
+  const payload = await getThemesByQuery(query);
+
+  if (payload && payload.status < 400) {
+    dispatch(getThemesByQuerySuccess(payload.data.themes));
+    return payload.data.themes;
+  }
+
+  dispatch(getThemesByQueryError(payload));
 };

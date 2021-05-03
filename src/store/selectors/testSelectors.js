@@ -8,18 +8,13 @@ export const getTestingResults = state => state.testingResults;
 
 export const getUpdatedTestingResults = createSelector(
   getTestingResults,
-  testingResults =>
-    testingResults.map(result => {
-      const currentFotmatresult = preperedResults(result);
-      return currentFotmatresult;
-    })
+  testingResults => testingResults.map(result => preperedResults(result))
 );
 
-export const getResultById = createSelector(
-  getUpdatedTestingResults,
-  (_, resultId) => resultId,
-  (testingResults, resultId) =>
-    testingResults.find(result => result._id === resultId)
+export const getTestingResultById = state => state.testingResult;
+export const getUpdatedTestingResultById = createSelector(
+  getTestingResultById,
+  result => preperedResults(result)
 );
 
 export const getTestsByThemeId = createSelector(

@@ -1,15 +1,29 @@
 export const preperedResults = result => {
+  if (!result) {
+    return;
+  }
   const createdDate = new Date(+result.date);
   const date = createdDate.toLocaleDateString();
   const time = createdDate.toLocaleTimeString();
 
-  const totalScore = result.testing.reduce((acc, test, index, arr) => {
-    if (test.questions[0].isTestPassed) {
-      return (acc += 1);
-    }
+  const testingResult = result.testing.reduce(
+    (acc, test, index, arr) => {
+      if (!acc.questionsCount) {
+        acc = { ...acc, questionsCount: arr.length };
+      }
 
-    return `${(acc / arr.length) * 100}%`;
-  }, 0);
+      if (test.isTestPassed) {
+        return { ...acc, trueAnswers: acc.trueAnswers + 1 };
+      }
+
+      return acc;
+    },
+    { trueAnswers: 0, questionsCount: 0 }
+  );
+
+  const totalScore = Math.round(
+    (testingResult.trueAnswers / testingResult.questionsCount) * 100
+  );
 
   return { ...result, date, time, totalScore };
 };

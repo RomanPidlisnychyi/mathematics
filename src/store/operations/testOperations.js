@@ -3,7 +3,8 @@ import {
   createTest,
   getTesting,
   createTestingResult,
-  getTestingResult,
+  getTestingResults,
+  getTestingResultById,
 } from '../../utils/apiUtils';
 import {
   getTestsRequest,
@@ -21,6 +22,9 @@ import {
   getTestingResultsRequest,
   getTestingResultsSuccess,
   getTestingResultsError,
+  getTestingResultByIdRequest,
+  getTestingResultByIdSuccess,
+  getTestingResultByIdError,
 } from '../actions/testActions';
 
 export const onGetTests = themeId => async dispatch => {
@@ -67,21 +71,32 @@ export const onCreateTestingResult = credentials => async dispatch => {
   const payload = await createTestingResult(credentials);
   if (payload.status < 400) {
     dispatch(createTestingResultSuccess(payload.data.testing));
-    return payload;
+    return payload.data.testing;
   }
 
   dispatch(createTestingResultError(payload));
 };
 
-export const onGetTestingResult = themeId => async dispatch => {
+export const onGetTestingResults = themeId => async dispatch => {
   dispatch(getTestingResultsRequest());
 
-  const payload = await getTestingResult(themeId);
+  const payload = await getTestingResults(themeId);
   if (payload.status < 400) {
-    console.log('payload.data.results', payload.data.results);
     dispatch(getTestingResultsSuccess(payload.data.results));
     return payload;
   }
 
   dispatch(getTestingResultsError(payload));
+};
+
+export const onGetTestingResultById = testingId => async dispatch => {
+  dispatch(getTestingResultByIdRequest());
+
+  const payload = await getTestingResultById(testingId);
+  if (payload.status < 400) {
+    dispatch(getTestingResultByIdSuccess(payload.data.result));
+    return payload;
+  }
+
+  dispatch(getTestingResultByIdError(payload));
 };

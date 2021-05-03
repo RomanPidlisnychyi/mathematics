@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { ArticlesList } from '../Lists';
 import { routes } from '../../routes';
 import styles from './Nav.module.css';
 
@@ -10,7 +9,6 @@ export default function Nav() {
       <div className={styles.container}>
         <Link to={articleRoute.path}>Розділи</Link>
       </div>
-      {/* <ArticlesList /> */}
     </div>
   );
 }

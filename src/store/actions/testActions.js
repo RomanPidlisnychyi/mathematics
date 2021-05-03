@@ -35,3 +35,16 @@ export const getTestingResultsSuccess = createAction(
 );
 export const getTestingResultsError = createAction('GET_TESTING_RESULTS_ERROR');
 export const clearTestingResults = createAction('CLEAR_TESTING_RESULTS');
+
+export const getTestingResultByIdRequest = createAction(
+  'GET_TESTING_RESULT_BY_ID_REQUEST'
+);
+export const getTestingResultByIdSuccess = createAction(
+  'GET_TESTING_RESULT_BY_ID_SUCCESS'
+);
+export const getTestingResultByIdError = createAction(
+  'GET_TESTING_RESULT_BY_ID_ERROR'
+);
+export const clearTestingResultById = createAction(
+  'CLEAR_TESTING_RESULT_BY_ID'
+);

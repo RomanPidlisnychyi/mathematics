@@ -4,7 +4,13 @@ import { loading } from './loadingReducer';
 import { articles } from './articleReducer';
 import { sections } from './sectionReducer';
 import { themes } from './themeReducer';
-import { tests, testing, testingResults, test } from './testReducer';
+import {
+  tests,
+  testing,
+  testingResults,
+  testingResult,
+  test,
+} from './testReducer';
 import filter from './filterReducer';
 
 export default combineReducers({
@@ -15,6 +21,7 @@ export default combineReducers({
   tests,
   testing,
   testingResults,
+  testingResult,
   test,
   filter,
   loading,

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://mathematics-api.herokuapp.com';
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 export const token = {
   setTokens(tokens) {
@@ -209,6 +209,21 @@ export const createTheme = async ({ name, sectionId }) => {
   }
 };
 
+export const getThemesByQuery = async query => {
+  try {
+    const response = await axios.get(`/themes/query/?${query}`);
+
+    token.setAccessToken(response);
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
 export const getTests = async themeId => {
   try {
     const response = await axios.get(`/tests/${themeId}`);
@@ -266,9 +281,23 @@ export const createTestingResult = async ({ themeId, testing }) => {
   }
 };
 
-export const getTestingResult = async themeId => {
+export const getTestingResults = async themeId => {
   try {
     const response = await axios.get(`/testing/results/${themeId}`);
+
+    token.setAccessToken(response);
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
+export const getTestingResultById = async testingId => {
+  try {
+    const response = await axios.get(`/testing/resultsById/${testingId}`);
 
     token.setAccessToken(response);
     return response;
