@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ArticlesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
+import { ButtonAdd } from '../Buttons';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { onCreateArticle } from '../../store/operations/articleOperations';
 import styles from './Article.module.css';
@@ -44,9 +45,7 @@ export default function Article({ location }) {
             <CreateArticleSectionForm />
           </MyModal>
         ) : (
-          <button type="button" onClick={handleBtn}>
-            add article
-          </button>
+          <ButtonAdd title="розділ" handleBtn={handleBtn} />
         ))}
     </div>
   );

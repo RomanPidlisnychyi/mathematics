@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SectionsList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
 import { Title } from '../Title';
-import { getStatus } from '../../store/selectors/authSelectors';
+import { ButtonDelete, ButtonAdd } from '../Buttons';
 import { onCreateSection } from '../../store/operations/sectionOperations';
 import styles from './Article.module.css';
 
@@ -13,11 +13,8 @@ export default function Article({ match, location }) {
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
-  const status = useSelector(getStatus);
-  const isAdmin = status === 'admin';
-
   const handleBtn = () => setIsModal(!isModal);
-
+  const handleDelBtn = () => console.log('delete article');
   const handleSubmit = () => {
     let credantials;
 
@@ -38,20 +35,21 @@ export default function Article({ match, location }) {
     <div className={styles.container}>
       <Title match={match} />
       <SectionsList {...location} articleId={articleId} />
-      {isAdmin &&
-        (isModal ? (
-          <MyModal
-            title={'Section'}
-            handleSubmit={handleSubmit}
-            handleModal={handleBtn}
-          >
-            <CreateArticleSectionForm />
-          </MyModal>
-        ) : (
-          <button type="button" onClick={handleBtn}>
-            add section
-          </button>
-        ))}
+      {isModal ? (
+        <MyModal
+          isModal={isModal}
+          title={'Section'}
+          handleSubmit={handleSubmit}
+          handleModal={handleBtn}
+        >
+          <CreateArticleSectionForm />
+        </MyModal>
+      ) : (
+        <>
+          <ButtonAdd title="секцію" handleBtn={handleBtn} />
+          <ButtonDelete title="розділ" handleDelBtn={handleDelBtn} />
+        </>
+      )}
     </div>
   );
 }

@@ -34,6 +34,7 @@ export const onRegister = credentials => async dispatch => {
   const payload = await register(credentials);
 
   if (payload.name) {
+    delete payload.name;
     dispatch(registerSuccess(payload));
     dispatch(setMessage('Registration was successfully'));
     dispatch(onCleanMessage());
