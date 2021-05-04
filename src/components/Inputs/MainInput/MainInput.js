@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import { onGetThemesByQuery } from '../../../store/operations/themeOperations';
@@ -12,13 +12,15 @@ export default function MainInput({ handleModal }) {
 
   const handleInput = e => setQuery(e.target.value);
 
-  if (query.length > 1) {
-    dispatch(onGetThemesByQuery(query)).then(themes => setThemes(themes));
-  }
+  useEffect(() => {
+    if (query.length > 1) {
+      dispatch(onGetThemesByQuery(query)).then(themes => setThemes(themes));
+    }
 
-  if (query.length < 2 && themes.length) {
-    setThemes([]);
-  }
+    if (query.length < 2 && themes.length) {
+      setThemes([]);
+    }
+  }, [dispatch, query]);
 
   const handleBtn = () => {
     // dispatch(onRefresh()).then(handleModal());
