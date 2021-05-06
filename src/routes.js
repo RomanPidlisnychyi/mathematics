@@ -94,6 +94,16 @@ export const routes = [
     ),
   },
   {
+    path: '/articles/:articleId/:sectionId/:themeId/:testId',
+    label: 'TestDetail',
+    exact: false,
+    pablic: true,
+    restricted: false,
+    component: lazy(() =>
+      import('./view/TestDetailView' /* webpackChunkName: "test-detail-view" */)
+    ),
+  },
+  {
     path: '/articles/:articleId/:sectionId/:themeId',
     label: 'ThemeDetail',
     exact: false,

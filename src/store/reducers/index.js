@@ -4,13 +4,8 @@ import { loading } from './loadingReducer';
 import { articles } from './articleReducer';
 import { sections } from './sectionReducer';
 import { themes } from './themeReducer';
-import {
-  tests,
-  testing,
-  testingResults,
-  testingResult,
-  test,
-} from './testReducer';
+import { tests, test } from './testReducer';
+import { testing, testingResults, testingResult } from './testingReducer';
 import filter from './filterReducer';
 
 export default combineReducers({

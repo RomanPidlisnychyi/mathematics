@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Title } from '../Title';
 import { TestingResultList } from '../Lists';
 import { LinkToLogin } from '../LinkToLogin';
-import { onGetTestingResultById } from '../../store/operations/testOperations';
-import { getUpdatedTestingResultById } from '../../store/selectors/testSelectors';
+import { onGetTestingResultById } from '../../store/operations/testingOperations';
+import { getUpdatedTestingResultById } from '../../store/selectors/testingSelectors';
 import { getName } from '../../store/selectors/authSelectors';
-import { clearTestingResultById } from '../../store/actions/testActions';
+import { clearTestingResultById } from '../../store/actions/testingActions';
 import styles from './Result.module.css';
 
 export default function Result({ match }) {

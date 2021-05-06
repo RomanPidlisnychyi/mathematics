@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkToLogin } from '../LinkToLogin';
-import { getTesting } from '../../store/selectors/testSelectors';
-import { clearTesting } from '../../store/actions/testActions';
+import { getTesting } from '../../store/selectors/testingSelectors';
+import { clearTesting } from '../../store/actions/testingActions';
 import { Title } from '../Title';
-import { onCreateTestingResult } from '../../store/operations/testOperations';
+import { onCreateTestingResult } from '../../store/operations/testingOperations';
 import { getName } from '../../store/selectors/authSelectors';
 import styles from './Testing.module.css';
 

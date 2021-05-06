@@ -6,7 +6,7 @@ import { getSectionById } from '../../store/selectors/sectionSelectors';
 import { getThemeById } from '../../store/selectors/themeSelectors';
 import { onGetSections } from '../../store/operations/sectionOperations';
 import { onGetThemes } from '../../store/operations/themeOperations';
-import { onGetTesting } from '../../store/operations/testOperations';
+import { onGetTesting } from '../../store/operations/testingOperations';
 
 export default function Title({ match }) {
   const dispatch = useDispatch();

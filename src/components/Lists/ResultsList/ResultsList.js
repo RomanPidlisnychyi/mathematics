@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getUpdatedTestingResults } from '../../../store/selectors/testSelectors';
-import { onGetTestingResults } from '../../../store/operations/testOperations';
-import { clearTestingResults } from '../../../store/actions/testActions';
+import { getUpdatedTestingResults } from '../../../store/selectors/testingSelectors';
+import { onGetTestingResults } from '../../../store/operations/testingOperations';
+import { clearTestingResults } from '../../../store/actions/testingActions';
 
 export default function ResultsList({ pathname, params }) {
   const dispatch = useDispatch();
