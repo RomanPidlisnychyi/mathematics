@@ -11,3 +11,7 @@ export const getTestsError = createAction('GET_TESTS_ERROR');
 export const createTestRequest = createAction('CREATE_TEST_REQUEST');
 export const createTestSuccess = createAction('CREATE_TEST_SUCCESS');
 export const createTestError = createAction('CREATE_TEST_ERROR');
+
+export const getTestByIdRequest = createAction('GET_TEST_BY_ID_REQUEST');
+export const getTestByIdSuccess = createAction('GET_TEST_BY_ID_SUCCESS');
+export const getTestByIdError = createAction('GET_TEST_BY_ID_ERROR');

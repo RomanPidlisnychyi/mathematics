@@ -1,4 +1,4 @@
-import { getTests, createTest } from '../../utils/apiUtils';
+import { getTests, createTest, getTestById } from '../../utils/apiUtils';
 import {
   getTestsRequest,
   getTestsSuccess,
@@ -6,6 +6,9 @@ import {
   createTestRequest,
   createTestSuccess,
   createTestError,
+  getTestByIdRequest,
+  getTestByIdSuccess,
+  getTestByIdError,
 } from '../actions/testActions';
 
 export const onGetTests = themeId => async dispatch => {
@@ -31,4 +34,17 @@ export const onCreateTest = credentials => async dispatch => {
   }
 
   dispatch(createTestError(payload));
+};
+
+export const onGetTestById = testId => async dispatch => {
+  dispatch(getTestByIdRequest());
+
+  const payload = await getTestById(testId);
+
+  if (payload.status < 400) {
+    dispatch(getTestByIdSuccess(payload.data.test));
+    return payload.data.test;
+  }
+
+  dispatch(getTestByIdError(payload));
 };
