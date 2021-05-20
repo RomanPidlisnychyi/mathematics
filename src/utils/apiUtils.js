@@ -224,6 +224,21 @@ export const getThemesByQuery = async query => {
   }
 };
 
+export const getThemePath = async theme => {
+  try {
+    const response = await axios.post('/themes/theme', theme);
+
+    token.setAccessToken(response);
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
 export const getTests = async themeId => {
   try {
     const response = await axios.get(`/tests/${themeId}`);

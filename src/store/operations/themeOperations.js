@@ -8,8 +8,16 @@ import {
   getThemesByQueryRequest,
   getThemesByQuerySuccess,
   getThemesByQueryError,
+  getPathToThemeRequest,
+  getPathToThemeSuccess,
+  getPathToThemeError,
 } from '../actions/themeActions';
-import { getThemes, createTheme, getThemesByQuery } from '../../utils/apiUtils';
+import {
+  getThemes,
+  createTheme,
+  getThemesByQuery,
+  getThemePath,
+} from '../../utils/apiUtils';
 
 export const onGetThemes = sectionId => async dispatch => {
   dispatch(getThemesRequest());
@@ -47,4 +55,17 @@ export const onGetThemesByQuery = query => async dispatch => {
   }
 
   dispatch(getThemesByQueryError(payload));
+};
+
+export const onGetThemePath = theme => async dispatch => {
+  dispatch(getPathToThemeRequest());
+
+  const payload = await getThemePath(theme);
+
+  if (payload && payload.status < 400) {
+    dispatch(getPathToThemeSuccess(payload.data.path));
+    return payload.data.path;
+  }
+
+  dispatch(getPathToThemeError(payload));
 };

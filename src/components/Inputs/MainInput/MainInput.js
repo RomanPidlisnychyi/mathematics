@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { InputGroup, Form, Button } from 'react-bootstrap';
-import { onGetThemesByQuery } from '../../../store/operations/themeOperations';
+import {
+  onGetThemesByQuery,
+  onGetThemePath,
+} from '../../../store/operations/themeOperations';
 import styles from './MainInput.module.css';
 
-export default function MainInput({ handleModal }) {
+export default function MainInput({ history }) {
   const dispatch = useDispatch();
 
   const [query, setQuery] = useState('');
@@ -22,8 +25,17 @@ export default function MainInput({ handleModal }) {
     }
   }, [dispatch, query]);
 
-  const handleBtn = () => {
-    // dispatch(onRefresh()).then(handleModal());
+  const handleBtn = e => {
+    const { value } = e.target;
+    if (!value) {
+      setQuery('');
+      return;
+    }
+
+    //dispatch theme => return path for push /articles/:articleId/:sectionId/:themeId
+    // console.log(`value`, value);
+    const theme = themes[value];
+    dispatch(onGetThemePath(theme)).then(path => history.push(path));
   };
   return (
     <InputGroup className={styles.input}>
@@ -41,12 +53,16 @@ export default function MainInput({ handleModal }) {
           onClick={handleBtn}
           disabled={!query}
         >
-          Add
+          Скинути
         </Button>
       </InputGroup.Append>
       <ul>
-        {themes.map(theme => (
-          <li key={theme._id}>{theme.name}</li>
+        {themes.map((theme, index) => (
+          <li key={theme._id}>
+            <button value={index} onClick={handleBtn}>
+              {theme.name}
+            </button>
+          </li>
         ))}
       </ul>
     </InputGroup>
