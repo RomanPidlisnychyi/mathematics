@@ -6,6 +6,7 @@ import { CreateArticleSectionForm } from '../Forms';
 import { Title } from '../Title';
 import { ButtonDelete, ButtonAdd } from '../Buttons';
 import { onCreateSection } from '../../store/operations/sectionOperations';
+import { onDeleteArticle } from '../../store/operations/articleOperations';
 import styles from './Article.module.css';
 
 export default function Article({ match, location }) {
@@ -14,7 +15,9 @@ export default function Article({ match, location }) {
   const [isModal, setIsModal] = useState(false);
 
   const handleBtn = () => setIsModal(!isModal);
-  const handleDelBtn = () => console.log('delete article');
+  const handleDelBtn = () => {
+    dispatch(onDeleteArticle(articleId));
+  };
   const handleSubmit = () => {
     let credantials;
 

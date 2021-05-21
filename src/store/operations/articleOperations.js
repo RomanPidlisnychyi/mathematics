@@ -5,9 +5,16 @@ import {
   createArticleRequest,
   createArticleSuccess,
   createArticleError,
+  deleteArticleRequest,
+  deleteArticleSuccess,
+  deleteArticleError,
 } from '../actions/articleActions';
 import { onCleanMessage } from './authOperations';
-import { getArticles, createArticle } from '../../utils/apiUtils';
+import {
+  getArticles,
+  createArticle,
+  deleteArticle,
+} from '../../utils/apiUtils';
 
 export const onGetArticles = () => async dispatch => {
   dispatch(getArticlesRequest());
@@ -32,5 +39,18 @@ export const onCreateArticle = credentials => async dispatch => {
   }
 
   dispatch(createArticleError(payload));
+  dispatch(onCleanMessage());
+};
+
+export const onDeleteArticle = id => async dispatch => {
+  dispatch(deleteArticleRequest());
+
+  const payload = await deleteArticle(id);
+  if (payload.status < 400) {
+    dispatch(deleteArticleSuccess(id));
+    return payload;
+  }
+
+  dispatch(deleteArticleError(payload));
   dispatch(onCleanMessage());
 };

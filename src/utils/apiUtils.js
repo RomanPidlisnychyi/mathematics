@@ -149,6 +149,21 @@ export const createArticle = async credentials => {
   }
 };
 
+export const deleteArticle = async id => {
+  try {
+    const response = await axios.delete(`/articles/${id}`);
+
+    token.setAccessToken(response);
+
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
+};
+
 export const getSections = async articleId => {
   try {
     const response = await axios.get(`/sections/${articleId}`);
