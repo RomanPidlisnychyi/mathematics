@@ -18,13 +18,14 @@ import {
   getThemesByQuery,
   getThemePath,
 } from '../../utils/apiUtils';
+import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetThemes = sectionId => async dispatch => {
   dispatch(getThemesRequest());
 
-  const payload = await getThemes(sectionId);
+  const payload = await asyncWrapper(getThemes(sectionId));
 
-  if (payload && payload.status < 400) {
+  if (payload.status < 400) {
     dispatch(getThemesSuccess(payload.data));
     return;
   }
@@ -35,8 +36,8 @@ export const onGetThemes = sectionId => async dispatch => {
 export const onCreateTheme = credentials => async dispatch => {
   dispatch(createThemeRequest());
 
-  const payload = await createTheme(credentials);
-  if (payload && payload.status < 400) {
+  const payload = await asyncWrapper(createTheme(credentials));
+  if (payload.status < 400) {
     dispatch(createThemeSuccess(payload.data));
     return payload;
   }
@@ -47,9 +48,9 @@ export const onCreateTheme = credentials => async dispatch => {
 export const onGetThemesByQuery = query => async dispatch => {
   dispatch(getThemesByQueryRequest());
 
-  const payload = await getThemesByQuery(query);
+  const payload = await asyncWrapper(getThemesByQuery(query));
 
-  if (payload && payload.status < 400) {
+  if (payload.status < 400) {
     dispatch(getThemesByQuerySuccess(payload.data.themes));
     return payload.data.themes;
   }
@@ -60,9 +61,9 @@ export const onGetThemesByQuery = query => async dispatch => {
 export const onGetThemePath = theme => async dispatch => {
   dispatch(getPathToThemeRequest());
 
-  const payload = await getThemePath(theme);
+  const payload = await asyncWrapper(getThemePath(theme));
 
-  if (payload && payload.status < 400) {
+  if (payload.status < 400) {
     dispatch(getPathToThemeSuccess(payload.data.path));
     return payload.data.path;
   }

@@ -16,10 +16,12 @@ import {
   deleteArticle,
 } from '../../utils/apiUtils';
 
+import { asyncWrapper } from '../../utils/asyncWrapper';
+
 export const onGetArticles = () => async dispatch => {
   dispatch(getArticlesRequest());
 
-  const payload = await getArticles();
+  const payload = await asyncWrapper(getArticles());
   if (payload.status < 400) {
     dispatch(getArticlesSuccess(payload.data));
     return;
@@ -32,7 +34,7 @@ export const onGetArticles = () => async dispatch => {
 export const onCreateArticle = credentials => async dispatch => {
   dispatch(createArticleRequest());
 
-  const payload = await createArticle(credentials);
+  const payload = await asyncWrapper(createArticle(credentials));
   if (payload.status < 400) {
     dispatch(createArticleSuccess(payload.data));
     return payload;
@@ -45,7 +47,7 @@ export const onCreateArticle = credentials => async dispatch => {
 export const onDeleteArticle = id => async dispatch => {
   dispatch(deleteArticleRequest());
 
-  const payload = await deleteArticle(id);
+  const payload = await asyncWrapper(deleteArticle(id));
   if (payload.status < 400) {
     dispatch(deleteArticleSuccess(id));
     return payload;

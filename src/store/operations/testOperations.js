@@ -1,4 +1,3 @@
-import { getTests, createTest, getTestById } from '../../utils/apiUtils';
 import {
   getTestsRequest,
   getTestsSuccess,
@@ -10,11 +9,13 @@ import {
   getTestByIdSuccess,
   getTestByIdError,
 } from '../actions/testActions';
+import { getTests, createTest, getTestById } from '../../utils/apiUtils';
+import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetTests = themeId => async dispatch => {
   dispatch(getTestsRequest());
 
-  const payload = await getTests(themeId);
+  const payload = await asyncWrapper(getTests(themeId));
 
   if (payload.status < 400) {
     dispatch(getTestsSuccess(payload.data.tests));
@@ -27,7 +28,7 @@ export const onGetTests = themeId => async dispatch => {
 export const onCreateTest = credentials => async dispatch => {
   dispatch(createTestRequest());
 
-  const payload = await createTest(credentials);
+  const payload = await asyncWrapper(createTest(credentials));
   if (payload.status < 400) {
     dispatch(createTestSuccess(payload.data.test));
     return payload;
@@ -39,7 +40,7 @@ export const onCreateTest = credentials => async dispatch => {
 export const onGetTestById = testId => async dispatch => {
   dispatch(getTestByIdRequest());
 
-  const payload = await getTestById(testId);
+  const payload = await asyncWrapper(getTestById(testId));
 
   if (payload.status < 400) {
     dispatch(getTestByIdSuccess(payload.data.test));

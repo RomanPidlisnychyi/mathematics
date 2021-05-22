@@ -17,6 +17,7 @@ import {
 } from '../actions/authActions';
 
 import { deleteArticleError } from '../actions/articleActions';
+import { createSectionError } from '../actions/sectionActions';
 
 const initialUserState = {
   name: null,
@@ -44,6 +45,7 @@ const message = createReducer(null, {
   [newPasswordError]: (_, { payload }) => payload,
   [setMessage]: (_, { payload }) => payload,
   [deleteArticleError]: (_, { payload }) => payload,
+  [createSectionError]: (_, { payload }) => payload,
   [cleanMessage]: () => null,
 });
 

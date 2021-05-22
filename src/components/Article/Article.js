@@ -12,12 +12,24 @@ import styles from './Article.module.css';
 export default function Article({ match, location }) {
   const articleId = match.params.articleId;
   const dispatch = useDispatch();
-  const [isModal, setIsModal] = useState(false);
+  const [isModal, setIsModal] = useState(null);
 
-  const handleBtn = () => setIsModal(!isModal);
+  const handleBtn = e => {
+    const value = e && e.target && e.target.value;
+
+    if (value) {
+      setIsModal(value);
+      return;
+    }
+
+    setIsModal(null);
+  };
+
   const handleDelBtn = () => {
     dispatch(onDeleteArticle(articleId));
+    setIsModal(null);
   };
+
   const handleSubmit = () => {
     let credantials;
 
@@ -28,29 +40,35 @@ export default function Article({ match, location }) {
       credantials = { ...credantials, [name]: value };
     });
 
-    dispatch(onCreateSection({ ...credantials, articleId })).then(response => {
-      if (response) {
-        setIsModal(false);
-      }
-    });
+    dispatch(onCreateSection({ ...credantials, articleId }));
+    setIsModal(null);
   };
   return (
     <div className={styles.container}>
       <Title match={match} />
       <SectionsList {...location} articleId={articleId} />
       {isModal ? (
-        <MyModal
-          isModal={isModal}
-          title={'Section'}
-          handleSubmit={handleSubmit}
-          handleModal={handleBtn}
-        >
-          <CreateArticleSectionForm />
-        </MyModal>
+        isModal === 'create' ? (
+          <MyModal
+            isModal={isModal}
+            title={'Section'}
+            handleSubmit={handleSubmit}
+            handleModal={handleBtn}
+          >
+            <CreateArticleSectionForm />
+          </MyModal>
+        ) : (
+          <MyModal
+            isModal={isModal}
+            title={'Видалити данний розділ?'}
+            handleSubmit={handleDelBtn}
+            handleModal={handleBtn}
+          />
+        )
       ) : (
         <>
           <ButtonAdd title="секцію" handleBtn={handleBtn} />
-          <ButtonDelete title="розділ" handleDelBtn={handleDelBtn} />
+          <ButtonDelete title="розділ" handleDelBtn={handleBtn} />
         </>
       )}
     </div>

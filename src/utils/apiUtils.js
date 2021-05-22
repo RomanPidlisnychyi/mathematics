@@ -40,36 +40,16 @@ export const token = {
   },
 };
 
-export const register = async credentials => {
-  try {
-    const { password } = credentials;
-
-    const response = await axios.post('/auth/register', credentials);
-
-    return { ...response.data, password };
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
+export const register = async credentials =>
+  await axios.post('/auth/register', credentials);
 
 export const login = async credentials => {
-  try {
-    const response = await axios.post('/auth/login', credentials);
+  const response = await axios.post('/auth/login', credentials);
 
-    const { tokens } = response.data;
-    token.setTokens(tokens);
+  const { tokens } = response.data;
+  token.setTokens(tokens);
 
-    return response;
-  } catch (err) {
-    console.log('err', err);
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const logout = () => {
@@ -77,278 +57,132 @@ export const logout = () => {
 };
 
 export const current = async tokens => {
-  try {
-    token.setTokens(tokens);
+  token.setTokens(tokens);
 
-    const response = await axios.get('/auth/current');
+  const response = await axios.get('/auth/current');
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    token.unset();
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
 
-export const recovery = async credentials => {
-  try {
-    const response = await axios.post('/auth/setRecoveryPassword', credentials);
+export const recovery = async credentials =>
+  await axios.post('/auth/setRecoveryPassword', credentials);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
+export const newPassword = async credentials =>
+  await axios.patch('/auth/setNewPassword', credentials);
 
-export const newPassword = async credentials => {
-  try {
-    const response = await axios.patch('/auth/setNewPassword', credentials);
-
-    const { password } = credentials;
-
-    return { ...response.data, password };
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
-
-export const getArticles = async () => {
-  try {
-    const response = await axios.get('/articles');
-
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
-};
+export const getArticles = async () => await axios.get('/articles');
 
 export const createArticle = async credentials => {
-  try {
-    const response = await axios.post('/articles', credentials);
+  const response = await axios.post('/articles', credentials);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const deleteArticle = async id => {
-  try {
-    const response = await axios.delete(`/articles/${id}`);
+  const response = await axios.delete(`/articles/${id}`);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const getSections = async articleId => {
-  try {
-    const response = await axios.get(`/sections/${articleId}`);
+  const response = await axios.get(`/sections/${articleId}`);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const createSection = async ({ name, articleId }) => {
-  try {
-    const response = await axios.post(`/sections/${articleId}`, { name });
+  const response = await axios.post(`/sections/${articleId}`, { name });
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const getThemes = async sectionId => {
-  try {
-    const response = await axios.get(`/themes/${sectionId}`);
+  const response = await axios.get(`/themes/${sectionId}`);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const createTheme = async ({ name, sectionId }) => {
-  try {
-    const response = await axios.post(`/themes/${sectionId}`, { name });
+  const response = await axios.post(`/themes/${sectionId}`, { name });
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const getThemesByQuery = async query => {
-  try {
-    const response = await axios.get(`/themes/query/?${query}`);
+  const response = await axios.get(`/themes/query/?${query}`);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const getThemePath = async theme => {
-  try {
-    const response = await axios.post('/themes/theme', theme);
+  const response = await axios.post('/themes/theme', theme);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const getTests = async themeId => {
-  try {
-    const response = await axios.get(`/tests/${themeId}`);
+  const response = await axios.get(`/tests/${themeId}`);
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
 
 export const createTest = async ({ themeId, test }) => {
-  try {
-    const response = await axios.post(`/tests/${themeId}`, test);
+  const response = await axios.post(`/tests/${themeId}`, test);
 
-    token.setAccessToken(response);
+  token.setAccessToken(response);
 
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  return response;
 };
 
 export const getTestById = async testId => {
-  try {
-    const response = await axios.get(`/tests/testId/?testId=${testId}`);
+  const response = await axios.get(`/tests/testId/?testId=${testId}`);
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
 
 export const getTesting = async themeId => {
-  try {
-    const response = await axios.get(`/testing/${themeId}`);
+  const response = await axios.get(`/testing/${themeId}`);
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
 
 export const createTestingResult = async ({ themeId, testing }) => {
-  try {
-    const response = await axios.post(`/testing/${themeId}`, testing);
+  const response = await axios.post(`/testing/${themeId}`, testing);
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
 
 export const getTestingResults = async themeId => {
-  try {
-    const response = await axios.get(`/testing/results/${themeId}`);
+  const response = await axios.get(`/testing/results/${themeId}`);
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
 
 export const getTestingResultById = async testingId => {
-  try {
-    const response = await axios.get(`/testing/resultsById/${testingId}`);
+  const response = await axios.get(`/testing/resultsById/${testingId}`);
 
-    token.setAccessToken(response);
-    return response;
-  } catch (err) {
-    if (err.response && err.response.data && err.response.data.message) {
-      return err.response.data.message;
-    }
-    return 'Проверьте интернет';
-  }
+  token.setAccessToken(response);
+  return response;
 };
