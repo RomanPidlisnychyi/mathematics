@@ -21,6 +21,7 @@ import {
 import { onGetArticles } from './articleOperations';
 import {
   token,
+  fetching,
   register,
   login,
   logout,
@@ -48,9 +49,17 @@ export const onRegister = credentials => async dispatch => {
 
 export const onLogin = credentials => async dispatch => {
   dispatch(loginRequest());
-  const payload = await asyncWrapper(login(credentials));
-  console.log(`payload`, payload);
+  const option = {
+    method: 'post',
+    path: '/auth/login',
+    credentials,
+  };
+  const payload = await asyncWrapper(fetching(option));
+
   if (payload.status < 400) {
+    const { tokens } = payload.data;
+    token.setTokens(tokens);
+
     dispatch(loginSuccess(payload.data.user));
     return;
   }
@@ -58,6 +67,19 @@ export const onLogin = credentials => async dispatch => {
   dispatch(loginError(payload));
   dispatch(onCleanMessage());
 };
+
+// export const onLogin = credentials => async dispatch => {
+//   dispatch(loginRequest());
+//   const payload = await asyncWrapper(login(credentials));
+//   console.log(`payload`, payload);
+//   if (payload.status < 400) {
+//     dispatch(loginSuccess(payload.data.user));
+//     return;
+//   }
+
+//   dispatch(loginError(payload));
+//   dispatch(onCleanMessage());
+// };
 
 export const onLogout = () => dispatch => {
   logout();

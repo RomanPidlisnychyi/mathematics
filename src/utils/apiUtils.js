@@ -40,6 +40,14 @@ export const token = {
   },
 };
 
+export const fetching = async ({ method, path, credentials }) => {
+  const response = await axios[method](path, credentials);
+
+  token.setAccessToken(response);
+
+  return response;
+};
+
 export const register = async credentials =>
   await axios.post('/auth/register', credentials);
 
