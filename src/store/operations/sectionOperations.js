@@ -7,13 +7,18 @@ import {
   createSectionError,
 } from '../actions/sectionActions';
 import { onCleanMessage } from '../operations/authOperations';
-import { getSections, createSection } from '../../utils/apiUtils';
+import { fetching } from '../../utils/apiUtils';
 import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetSections = articleId => async dispatch => {
   dispatch(getSectionsRequest());
 
-  const payload = await asyncWrapper(getSections(articleId));
+  const option = {
+    method: 'get',
+    path: `/sections/${articleId}`,
+  };
+
+  const payload = await asyncWrapper(fetching(option));
 
   if (payload.status < 400) {
     dispatch(getSectionsSuccess(payload.data));
@@ -23,16 +28,24 @@ export const onGetSections = articleId => async dispatch => {
   dispatch(getSectionsError(payload));
 };
 
-export const onCreateSection = credentials => async dispatch => {
-  dispatch(createSectionRequest());
+export const onCreateSection =
+  ({ articleId, name }) =>
+  async dispatch => {
+    dispatch(createSectionRequest());
 
-  const payload = await asyncWrapper(createSection(credentials));
+    const option = {
+      method: 'post',
+      path: `/sections/${articleId}`,
+      credentials: name,
+    };
 
-  if (payload.status < 400) {
-    dispatch(createSectionSuccess(payload.data));
-    return payload;
-  }
+    const payload = await asyncWrapper(fetching(option));
 
-  dispatch(createSectionError(payload));
-  dispatch(onCleanMessage());
-};
+    if (payload.status < 400) {
+      dispatch(createSectionSuccess(payload.data));
+      return payload;
+    }
+
+    dispatch(createSectionError(payload));
+    dispatch(onCleanMessage());
+  };

@@ -12,18 +12,18 @@ import {
   getTestingResultByIdSuccess,
   getTestingResultByIdError,
 } from '../actions/testingActions';
-import {
-  getTesting,
-  createTestingResult,
-  getTestingResults,
-  getTestingResultById,
-} from '../../utils/apiUtils';
+import { fetching } from '../../utils/apiUtils';
 import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetTesting = themeId => async dispatch => {
   dispatch(getTestingRequest());
 
-  const payload = await asyncWrapper(getTesting(themeId));
+  const option = {
+    method: 'get',
+    path: `/testing/${themeId}`,
+  };
+
+  const payload = await asyncWrapper(fetching(option));
 
   if (payload.status < 400) {
     dispatch(getTestingSuccess(payload.data.tests));
@@ -33,22 +33,35 @@ export const onGetTesting = themeId => async dispatch => {
   dispatch(getTestingError(payload));
 };
 
-export const onCreateTestingResult = credentials => async dispatch => {
-  dispatch(createTestingResultRequest());
+export const onCreateTestingResult =
+  ({ themeId, testing }) =>
+  async dispatch => {
+    dispatch(createTestingResultRequest());
 
-  const payload = await asyncWrapper(createTestingResult(credentials));
-  if (payload.status < 400) {
-    dispatch(createTestingResultSuccess(payload.data.testing));
-    return payload.data.testing;
-  }
+    const option = {
+      method: 'post',
+      path: `/testing/${themeId}`,
+      credentials: testing,
+    };
 
-  dispatch(createTestingResultError(payload));
-};
+    const payload = await asyncWrapper(fetching(option));
+    if (payload.status < 400) {
+      dispatch(createTestingResultSuccess(payload.data.testing));
+      return payload.data.testing;
+    }
+
+    dispatch(createTestingResultError(payload));
+  };
 
 export const onGetTestingResults = themeId => async dispatch => {
   dispatch(getTestingResultsRequest());
 
-  const payload = await asyncWrapper(getTestingResults(themeId));
+  const option = {
+    method: 'get',
+    path: `/testing/results/${themeId}`,
+  };
+
+  const payload = await asyncWrapper(fetching(option));
   if (payload.status < 400) {
     dispatch(getTestingResultsSuccess(payload.data.results));
     return payload;
@@ -60,7 +73,12 @@ export const onGetTestingResults = themeId => async dispatch => {
 export const onGetTestingResultById = testingId => async dispatch => {
   dispatch(getTestingResultByIdRequest());
 
-  const payload = await asyncWrapper(getTestingResultById(testingId));
+  const option = {
+    method: 'get',
+    path: `/testing/resultsById/${testingId}`,
+  };
+
+  const payload = await asyncWrapper(fetching(option));
   if (payload.status < 400) {
     dispatch(getTestingResultByIdSuccess(payload.data.result));
     return payload;

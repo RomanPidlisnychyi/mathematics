@@ -19,22 +19,18 @@ import {
   cleanMessage,
 } from '../actions/authActions';
 import { onGetArticles } from './articleOperations';
-import {
-  token,
-  fetching,
-  register,
-  login,
-  logout,
-  current,
-  recovery,
-  newPassword,
-} from '../../utils/apiUtils';
+import { token, fetching } from '../../utils/apiUtils';
 import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onRegister = credentials => async dispatch => {
   dispatch(registerRequest());
+  const option = {
+    method: 'post',
+    path: '/auth/register',
+    credentials,
+  };
 
-  const payload = await asyncWrapper(register(credentials));
+  const payload = await asyncWrapper(fetching(option));
   if (payload.status < 400) {
     delete credentials.name;
     dispatch(registerSuccess(credentials));
@@ -68,27 +64,22 @@ export const onLogin = credentials => async dispatch => {
   dispatch(onCleanMessage());
 };
 
-// export const onLogin = credentials => async dispatch => {
-//   dispatch(loginRequest());
-//   const payload = await asyncWrapper(login(credentials));
-//   console.log(`payload`, payload);
-//   if (payload.status < 400) {
-//     dispatch(loginSuccess(payload.data.user));
-//     return;
-//   }
-
-//   dispatch(loginError(payload));
-//   dispatch(onCleanMessage());
-// };
-
 export const onLogout = () => dispatch => {
-  logout();
+  token.unset();
   dispatch(logoutSuccess());
 };
 
 export const onCurrent = tokens => async dispatch => {
   dispatch(currentRequest());
-  const payload = await asyncWrapper(current(tokens));
+
+  token.setTokens(tokens);
+
+  const option = {
+    method: 'get',
+    path: '/auth/current',
+  };
+  const payload = await asyncWrapper(fetching(option));
+
   dispatch(onGetArticles());
   if (payload.status < 400) {
     dispatch(currentSuccess(payload.data.user));
@@ -102,7 +93,13 @@ export const onCurrent = tokens => async dispatch => {
 
 export const onRecovery = credentials => async dispatch => {
   dispatch(recoveryRequest());
-  const payload = await asyncWrapper(recovery(credentials));
+
+  const option = {
+    method: 'post',
+    path: '/auth/setRecoveryPassword',
+    credentials,
+  };
+  const payload = await asyncWrapper(fetching(option));
 
   if (payload.status < 400) {
     dispatch(recoverySuccess(payload.data));
@@ -115,7 +112,13 @@ export const onRecovery = credentials => async dispatch => {
 
 export const onNewPassword = credentials => async dispatch => {
   dispatch(newPasswordRequest());
-  const payload = await newPassword(credentials);
+
+  const option = {
+    method: 'patch',
+    path: '/auth/setNewPassword',
+    credentials,
+  };
+  const payload = await asyncWrapper(fetching(option));
 
   if (payload.status < 400) {
     delete credentials.recoveryPassword;

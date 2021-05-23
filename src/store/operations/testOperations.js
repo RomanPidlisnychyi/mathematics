@@ -9,13 +9,18 @@ import {
   getTestByIdSuccess,
   getTestByIdError,
 } from '../actions/testActions';
-import { getTests, createTest, getTestById } from '../../utils/apiUtils';
+import { fetching } from '../../utils/apiUtils';
 import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetTests = themeId => async dispatch => {
   dispatch(getTestsRequest());
 
-  const payload = await asyncWrapper(getTests(themeId));
+  const option = {
+    method: 'get',
+    path: `/tests/${themeId}`,
+  };
+
+  const payload = await asyncWrapper(fetching(option));
 
   if (payload.status < 400) {
     dispatch(getTestsSuccess(payload.data.tests));
@@ -25,22 +30,35 @@ export const onGetTests = themeId => async dispatch => {
   dispatch(getTestsError(payload));
 };
 
-export const onCreateTest = credentials => async dispatch => {
-  dispatch(createTestRequest());
+export const onCreateTest =
+  ({ themeId, test }) =>
+  async dispatch => {
+    dispatch(createTestRequest());
 
-  const payload = await asyncWrapper(createTest(credentials));
-  if (payload.status < 400) {
-    dispatch(createTestSuccess(payload.data.test));
-    return payload;
-  }
+    const option = {
+      method: 'post',
+      path: `/tests/${themeId}`,
+      credentials: test,
+    };
 
-  dispatch(createTestError(payload));
-};
+    const payload = await asyncWrapper(fetching(option));
+    if (payload.status < 400) {
+      dispatch(createTestSuccess(payload.data.test));
+      return payload;
+    }
+
+    dispatch(createTestError(payload));
+  };
 
 export const onGetTestById = testId => async dispatch => {
   dispatch(getTestByIdRequest());
 
-  const payload = await asyncWrapper(getTestById(testId));
+  const option = {
+    method: 'get',
+    path: `/tests/testId/?testId=${testId}`,
+  };
+
+  const payload = await asyncWrapper(fetching(option));
 
   if (payload.status < 400) {
     dispatch(getTestByIdSuccess(payload.data.test));
