@@ -17,7 +17,11 @@ import {
 } from '../actions/authActions';
 
 import { deleteArticleError } from '../actions/articleActions';
-import { createSectionError } from '../actions/sectionActions';
+import {
+  createSectionError,
+  deleteSectionError,
+} from '../actions/sectionActions';
+import { createThemeError } from '../actions/themeActions';
 
 const initialUserState = {
   name: null,
@@ -46,6 +50,8 @@ const message = createReducer(null, {
   [setMessage]: (_, { payload }) => payload,
   [deleteArticleError]: (_, { payload }) => payload,
   [createSectionError]: (_, { payload }) => payload,
+  [createThemeError]: (_, { payload }) => payload,
+  [deleteSectionError]: (_, { payload }) => payload,
   [cleanMessage]: () => null,
 });
 

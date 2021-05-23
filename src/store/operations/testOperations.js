@@ -10,7 +10,6 @@ import {
   getTestByIdError,
 } from '../actions/testActions';
 import { fetching } from '../../utils/apiUtils';
-import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetTests = themeId => async dispatch => {
   dispatch(getTestsRequest());
@@ -20,7 +19,7 @@ export const onGetTests = themeId => async dispatch => {
     path: `/tests/${themeId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getTestsSuccess(payload.data.tests));
@@ -41,7 +40,7 @@ export const onCreateTest =
       credentials: test,
     };
 
-    const payload = await asyncWrapper(fetching(option));
+    const payload = await fetching(option);
     if (payload.status < 400) {
       dispatch(createTestSuccess(payload.data.test));
       return payload;
@@ -58,7 +57,7 @@ export const onGetTestById = testId => async dispatch => {
     path: `/tests/testId/?testId=${testId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getTestByIdSuccess(payload.data.test));

@@ -5,10 +5,12 @@ import {
   createSectionRequest,
   createSectionSuccess,
   createSectionError,
+  deleteSectionRequest,
+  deleteSectionSuccess,
+  deleteSectionError,
 } from '../actions/sectionActions';
 import { onCleanMessage } from '../operations/authOperations';
 import { fetching } from '../../utils/apiUtils';
-import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetSections = articleId => async dispatch => {
   dispatch(getSectionsRequest());
@@ -18,7 +20,7 @@ export const onGetSections = articleId => async dispatch => {
     path: `/sections/${articleId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getSectionsSuccess(payload.data));
@@ -36,10 +38,10 @@ export const onCreateSection =
     const option = {
       method: 'post',
       path: `/sections/${articleId}`,
-      credentials: name,
+      credentials: { name },
     };
 
-    const payload = await asyncWrapper(fetching(option));
+    const payload = await fetching(option);
 
     if (payload.status < 400) {
       dispatch(createSectionSuccess(payload.data));
@@ -49,3 +51,21 @@ export const onCreateSection =
     dispatch(createSectionError(payload));
     dispatch(onCleanMessage());
   };
+
+export const onDeleteSection = id => async dispatch => {
+  dispatch(deleteSectionRequest());
+
+  const option = {
+    method: 'delete',
+    path: `/sections/${id}`,
+  };
+
+  const payload = await fetching(option);
+  if (payload.status < 400) {
+    dispatch(deleteSectionSuccess(id));
+    return payload;
+  }
+
+  dispatch(deleteSectionError(payload));
+  dispatch(onCleanMessage());
+};

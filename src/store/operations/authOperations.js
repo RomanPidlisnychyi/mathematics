@@ -20,7 +20,6 @@ import {
 } from '../actions/authActions';
 import { onGetArticles } from './articleOperations';
 import { token, fetching } from '../../utils/apiUtils';
-import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onRegister = credentials => async dispatch => {
   dispatch(registerRequest());
@@ -30,7 +29,7 @@ export const onRegister = credentials => async dispatch => {
     credentials,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
   if (payload.status < 400) {
     delete credentials.name;
     dispatch(registerSuccess(credentials));
@@ -50,7 +49,7 @@ export const onLogin = credentials => async dispatch => {
     path: '/auth/login',
     credentials,
   };
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     const { tokens } = payload.data;
@@ -78,7 +77,7 @@ export const onCurrent = tokens => async dispatch => {
     method: 'get',
     path: '/auth/current',
   };
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   dispatch(onGetArticles());
   if (payload.status < 400) {
@@ -99,7 +98,7 @@ export const onRecovery = credentials => async dispatch => {
     path: '/auth/setRecoveryPassword',
     credentials,
   };
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(recoverySuccess(payload.data));
@@ -118,7 +117,7 @@ export const onNewPassword = credentials => async dispatch => {
     path: '/auth/setNewPassword',
     credentials,
   };
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     delete credentials.recoveryPassword;

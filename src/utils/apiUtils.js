@@ -41,9 +41,16 @@ export const token = {
 };
 
 export const fetching = async ({ method, path, credentials }) => {
-  const response = await axios[method](path, credentials);
+  try {
+    const response = await axios[method](path, credentials);
 
-  token.setAccessToken(response);
+    token.setAccessToken(response);
 
-  return response;
+    return response;
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.message) {
+      return err.response.data.message;
+    }
+    return 'Проверьте интернет';
+  }
 };

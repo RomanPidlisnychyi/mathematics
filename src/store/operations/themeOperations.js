@@ -12,8 +12,8 @@ import {
   getPathToThemeSuccess,
   getPathToThemeError,
 } from '../actions/themeActions';
+import { onCleanMessage } from './authOperations';
 import { fetching } from '../../utils/apiUtils';
-import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetThemes = sectionId => async dispatch => {
   dispatch(getThemesRequest());
@@ -23,7 +23,7 @@ export const onGetThemes = sectionId => async dispatch => {
     path: `/themes/${sectionId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getThemesSuccess(payload.data));
@@ -39,18 +39,19 @@ export const onCreateTheme =
     dispatch(createThemeRequest());
 
     const option = {
-      method: 'get',
+      method: 'post',
       path: `/themes/${sectionId}`,
-      credentials: name,
+      credentials: { name },
     };
 
-    const payload = await asyncWrapper(fetching(option));
+    const payload = await fetching(option);
     if (payload.status < 400) {
       dispatch(createThemeSuccess(payload.data));
       return payload;
     }
 
     dispatch(createThemeError(payload));
+    dispatch(onCleanMessage());
   };
 
 export const onGetThemesByQuery = query => async dispatch => {
@@ -61,7 +62,7 @@ export const onGetThemesByQuery = query => async dispatch => {
     path: `/themes/query/?${query}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getThemesByQuerySuccess(payload.data.themes));
@@ -80,7 +81,7 @@ export const onGetThemePath = theme => async dispatch => {
     credentials: theme,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getPathToThemeSuccess(payload.data.path));

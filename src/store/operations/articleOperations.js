@@ -12,8 +12,6 @@ import {
 import { onCleanMessage } from './authOperations';
 import { fetching } from '../../utils/apiUtils';
 
-import { asyncWrapper } from '../../utils/asyncWrapper';
-
 export const onGetArticles = () => async dispatch => {
   dispatch(getArticlesRequest());
 
@@ -22,7 +20,7 @@ export const onGetArticles = () => async dispatch => {
     path: '/articles',
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
   if (payload.status < 400) {
     dispatch(getArticlesSuccess(payload.data));
     return;
@@ -41,7 +39,7 @@ export const onCreateArticle = credentials => async dispatch => {
     credentials,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
   if (payload.status < 400) {
     dispatch(createArticleSuccess(payload.data));
     return payload;
@@ -59,7 +57,7 @@ export const onDeleteArticle = id => async dispatch => {
     path: `/articles/${id}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
   if (payload.status < 400) {
     dispatch(deleteArticleSuccess(id));
     return payload;

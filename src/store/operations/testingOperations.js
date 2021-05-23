@@ -13,7 +13,6 @@ import {
   getTestingResultByIdError,
 } from '../actions/testingActions';
 import { fetching } from '../../utils/apiUtils';
-import { asyncWrapper } from '../../utils/asyncWrapper';
 
 export const onGetTesting = themeId => async dispatch => {
   dispatch(getTestingRequest());
@@ -23,7 +22,7 @@ export const onGetTesting = themeId => async dispatch => {
     path: `/testing/${themeId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
 
   if (payload.status < 400) {
     dispatch(getTestingSuccess(payload.data.tests));
@@ -44,7 +43,7 @@ export const onCreateTestingResult =
       credentials: testing,
     };
 
-    const payload = await asyncWrapper(fetching(option));
+    const payload = await fetching(option);
     if (payload.status < 400) {
       dispatch(createTestingResultSuccess(payload.data.testing));
       return payload.data.testing;
@@ -61,7 +60,7 @@ export const onGetTestingResults = themeId => async dispatch => {
     path: `/testing/results/${themeId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
   if (payload.status < 400) {
     dispatch(getTestingResultsSuccess(payload.data.results));
     return payload;
@@ -78,7 +77,7 @@ export const onGetTestingResultById = testingId => async dispatch => {
     path: `/testing/resultsById/${testingId}`,
   };
 
-  const payload = await asyncWrapper(fetching(option));
+  const payload = await fetching(option);
   if (payload.status < 400) {
     dispatch(getTestingResultByIdSuccess(payload.data.result));
     return payload;
