@@ -9,6 +9,7 @@ import {
   getTestByIdSuccess,
   getTestByIdError,
 } from '../actions/testActions';
+import { onCleanMessage } from './authOperations';
 import { fetching } from '../../utils/apiUtils';
 
 export const onGetTests = themeId => async dispatch => {
@@ -41,12 +42,14 @@ export const onCreateTest =
     };
 
     const payload = await fetching(option);
+    console.log(`payload`, payload);
     if (payload.status < 400) {
       dispatch(createTestSuccess(payload.data.test));
       return payload;
     }
 
     dispatch(createTestError(payload));
+    dispatch(onCleanMessage());
   };
 
 export const onGetTestById = testId => async dispatch => {

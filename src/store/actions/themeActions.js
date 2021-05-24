@@ -8,6 +8,10 @@ export const createThemeRequest = createAction('CREATE_THEME_REQUEST');
 export const createThemeSuccess = createAction('CREATE_THEME_SUCCESS');
 export const createThemeError = createAction('CREATE_THEME_ERROR');
 
+export const deleteThemeRequest = createAction('DELETE_THEME_REQUEST');
+export const deleteThemeSuccess = createAction('DELETE_THEME_SUCCESS');
+export const deleteThemeError = createAction('DELETE_THEME_ERROR');
+
 export const getThemesByQueryRequest = createAction(
   'GET_THEMES_BY_QUERY_REQUEST'
 );

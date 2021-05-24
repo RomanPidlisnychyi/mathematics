@@ -51,7 +51,7 @@ export default function Article({ match, location }) {
         isModal === 'create' ? (
           <MyModal
             isModal={isModal}
-            title={'Section'}
+            title={'Нова секція'}
             handleSubmit={handleSubmit}
             handleModal={handleBtn}
           >
@@ -59,8 +59,7 @@ export default function Article({ match, location }) {
           </MyModal>
         ) : (
           <MyModal
-            isModal={isModal}
-            title={'Видалити данний розділ?'}
+            title={'Видалити розділ?'}
             handleSubmit={handleDelBtn}
             handleModal={handleBtn}
           />

@@ -29,6 +29,7 @@ export default function Section({ match, location }) {
     dispatch(onDeleteSection(sectionId));
     setIsModal(null);
   };
+
   const handleSubmit = () => {
     let credantials;
 
@@ -49,8 +50,7 @@ export default function Section({ match, location }) {
       {isModal ? (
         isModal === 'create' ? (
           <MyModal
-            isModal={isModal}
-            title={'Theme'}
+            title={'Нова тема'}
             handleSubmit={handleSubmit}
             handleModal={handleBtn}
           >
@@ -58,8 +58,7 @@ export default function Section({ match, location }) {
           </MyModal>
         ) : (
           <MyModal
-            isModal={isModal}
-            title={'Видалити данний розділ?'}
+            title={'Видалити секцію?'}
             handleSubmit={handleDelBtn}
             handleModal={handleBtn}
           />

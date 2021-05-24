@@ -9,6 +9,7 @@ import { ButtonAdd, ButtonDelete } from '../Buttons';
 import { getIsAdmin } from '../../store/selectors/authSelectors';
 import { getTest } from '../../store/selectors/testSelectors';
 import { onCreateTest } from '../../store/operations/testOperations';
+import { onDeleteTheme } from '../../store/operations/themeOperations';
 import { cleanTestState } from '../../store/actions/testActions';
 import styles from './Theme.module.css';
 
@@ -20,39 +21,53 @@ export default function Theme({ match, location }) {
   const test = useSelector(getTest);
   const isAdmin = useSelector(getIsAdmin);
 
-  const handleBtn = () => {
-    if (isModal) {
+  const handleBtn = e => {
+    const value = e && e.target && e.target.value;
+
+    if (value) {
+      setIsModal(value);
       dispatch(cleanTestState());
+      return;
     }
-    setIsModal(!isModal);
+
+    setIsModal(null);
   };
 
-  const handleDelBtn = () => console.log('delete theme');
+  const handleDelBtn = () => {
+    dispatch(onDeleteTheme(themeId));
+    setIsModal(null);
+  };
 
   const handleSubmit = () => {
-    dispatch(onCreateTest({ test, themeId })).then(response => {
-      if (response) {
-        setIsModal(false);
-        dispatch(cleanTestState());
-      }
-    });
+    dispatch(onCreateTest({ test, themeId }));
+
+    setIsModal(false);
+    dispatch(cleanTestState());
   };
   return (
     <div className={styles.container}>
       <Title match={match} />
       {isAdmin && <TestsList {...location} themeId={themeId} />}
       {isModal ? (
-        <MyModal
-          title={'Test'}
-          handleSubmit={handleSubmit}
-          handleModal={handleBtn}
-        >
-          <SimpleTest />
-        </MyModal>
+        isModal === 'create' ? (
+          <MyModal
+            title={'Test'}
+            handleSubmit={handleSubmit}
+            handleModal={handleBtn}
+          >
+            <SimpleTest />
+          </MyModal>
+        ) : (
+          <MyModal
+            title={'Видалити тему?'}
+            handleSubmit={handleDelBtn}
+            handleModal={handleBtn}
+          />
+        )
       ) : (
         <>
           <ButtonAdd title="тест" handleBtn={handleBtn} />
-          <ButtonDelete title="тему" handleDelBtn={handleDelBtn} />
+          <ButtonDelete title="тему" handleDelBtn={handleBtn} />
         </>
       )}
       <Link to={`${location.pathname}/results`}>тести</Link>

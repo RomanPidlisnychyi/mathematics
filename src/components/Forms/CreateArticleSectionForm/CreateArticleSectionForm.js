@@ -7,7 +7,6 @@ export default function CreateArticleSectionForm() {
   const myInput = inputs.find(input => input.name === 'name');
   return (
     <Form className={styles.form}>
-      <h6 className={styles.title}>Create</h6>
       <MyInput {...myInput} />
     </Form>
   );

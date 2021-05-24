@@ -5,6 +5,9 @@ import {
   createThemeRequest,
   createThemeSuccess,
   createThemeError,
+  deleteThemeRequest,
+  deleteThemeSuccess,
+  deleteThemeError,
   getThemesByQueryRequest,
   getThemesByQuerySuccess,
   getThemesByQueryError,
@@ -53,6 +56,25 @@ export const onCreateTheme =
     dispatch(createThemeError(payload));
     dispatch(onCleanMessage());
   };
+
+export const onDeleteTheme = themeId => async dispatch => {
+  dispatch(deleteThemeRequest());
+
+  const option = {
+    method: 'delete',
+    path: `/themes/${themeId}`,
+  };
+
+  const payload = await fetching(option);
+
+  if (payload.status < 400) {
+    dispatch(deleteThemeSuccess(themeId));
+    return;
+  }
+
+  dispatch(deleteThemeError(payload));
+  dispatch(onCleanMessage());
+};
 
 export const onGetThemesByQuery = query => async dispatch => {
   dispatch(getThemesByQueryRequest());

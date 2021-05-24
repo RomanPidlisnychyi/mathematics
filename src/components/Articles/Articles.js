@@ -38,7 +38,7 @@ export default function Article({ location }) {
       {isAdmin &&
         (isModal ? (
           <MyModal
-            title={'Article'}
+            title={'Новий розділ'}
             handleSubmit={handleSubmit}
             handleModal={handleBtn}
           >
