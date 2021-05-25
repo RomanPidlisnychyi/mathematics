@@ -7,7 +7,6 @@ import { Header } from './Header';
 import { Nav } from './Nav';
 import { routes } from '../routes';
 import { onCurrent } from '../store/operations/authOperations';
-import { onGetArticles } from '../store/operations/articleOperations';
 import { getName } from '../store/selectors/authSelectors';
 import { token } from '../utils/apiUtils';
 
@@ -21,12 +20,6 @@ export default function App() {
       dispatch(onCurrent(tokens));
     }
   }, [dispatch, name, tokens]);
-
-  useEffect(() => {
-    if (!tokens) {
-      dispatch(onGetArticles());
-    }
-  }, [dispatch, tokens]);
 
   return (
     <Layout>

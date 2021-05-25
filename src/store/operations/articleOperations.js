@@ -11,6 +11,7 @@ import {
 } from '../actions/articleActions';
 import { onCleanMessage } from './authOperations';
 import { fetching } from '../../utils/apiUtils';
+import { requestCash } from '../../utils/requestCash';
 
 export const onGetArticles = () => async dispatch => {
   dispatch(getArticlesRequest());
@@ -20,7 +21,8 @@ export const onGetArticles = () => async dispatch => {
     path: '/articles',
   };
 
-  const payload = await fetching(option);
+  // const payload = await fetching(option);
+  const payload = await requestCash(option);
   if (payload.status < 400) {
     dispatch(getArticlesSuccess(payload.data));
     return;

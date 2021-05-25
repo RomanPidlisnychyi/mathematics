@@ -42,16 +42,6 @@ export const routes = [
     ),
   },
   {
-    path: '/admin',
-    label: 'Admin',
-    exact: true,
-    pablic: false,
-    restricted: false,
-    component: lazy(() =>
-      import('./view/AdminView' /* webpackChunkName: "admin-view" */)
-    ),
-  },
-  {
     path: '/articles',
     label: 'Articles',
     exact: true,

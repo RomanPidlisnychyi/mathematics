@@ -6,9 +6,10 @@ import { CreateArticleSectionForm } from '../Forms';
 import { ButtonAdd } from '../Buttons';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { onCreateArticle } from '../../store/operations/articleOperations';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Article.module.css';
 
-export default function Article({ location }) {
+function Article({ location }) {
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
 
@@ -50,3 +51,5 @@ export default function Article({ location }) {
     </div>
   );
 }
+
+export default viewWrappHoc(Article);

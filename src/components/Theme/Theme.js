@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 import { TestsList } from '../Lists';
 import { SimpleTest } from '../SimpleTest';
 import { MyModal } from '../Modal';
-import { Title } from '../Title';
 import { ButtonAdd, ButtonDelete } from '../Buttons';
 import { getIsAdmin } from '../../store/selectors/authSelectors';
 import { getTest } from '../../store/selectors/testSelectors';
 import { onCreateTest } from '../../store/operations/testOperations';
 import { onDeleteTheme } from '../../store/operations/themeOperations';
 import { cleanTestState } from '../../store/actions/testActions';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Theme.module.css';
 
-export default function Theme({ match, location }) {
+function Theme({ match, location }) {
   const themeId = match.params.themeId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
@@ -46,7 +46,6 @@ export default function Theme({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      <Title match={match} />
       {isAdmin && <TestsList {...location} themeId={themeId} />}
       {isModal ? (
         isModal === 'create' ? (
@@ -74,3 +73,5 @@ export default function Theme({ match, location }) {
     </div>
   );
 }
+
+export default viewWrappHoc(Theme);
