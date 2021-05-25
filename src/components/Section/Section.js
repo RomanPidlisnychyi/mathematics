@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { ThemesList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
-import { Title } from '../Title';
 import { ButtonAdd, ButtonDelete } from '../Buttons';
 import { onCreateTheme } from '../../store/operations/themeOperations';
 import { onDeleteSection } from '../../store/operations/sectionOperations';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Section.module.css';
 
-export default function Section({ match, location }) {
+function Section({ match, location }) {
   const sectionId = match.params.sectionId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
@@ -45,7 +45,6 @@ export default function Section({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      <Title match={match} />
       <ThemesList {...location} sectionId={sectionId} />
       {isModal ? (
         isModal === 'create' ? (
@@ -72,3 +71,5 @@ export default function Section({ match, location }) {
     </div>
   );
 }
+
+export default viewWrappHoc(Section);

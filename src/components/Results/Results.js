@@ -1,15 +1,14 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ResultsList } from '../Lists';
-import { Title } from '../Title';
 import { getName } from '../../store/selectors/authSelectors';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Results.module.css';
 
-export default function Results({ match, location }) {
+function Results({ match, location }) {
   const isAuthenticated = useSelector(getName);
   return (
     <div className={styles.container}>
-      <Title match={match} />
       {isAuthenticated ? (
         <>
           <ResultsList {...location} {...match} />
@@ -21,3 +20,5 @@ export default function Results({ match, location }) {
     </div>
   );
 }
+
+export default viewWrappHoc(Results);

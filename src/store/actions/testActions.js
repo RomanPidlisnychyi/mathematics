@@ -15,3 +15,7 @@ export const createTestError = createAction('CREATE_TEST_ERROR');
 export const getTestByIdRequest = createAction('GET_TEST_BY_ID_REQUEST');
 export const getTestByIdSuccess = createAction('GET_TEST_BY_ID_SUCCESS');
 export const getTestByIdError = createAction('GET_TEST_BY_ID_ERROR');
+
+export const deleteTestRequest = createAction('DELETE_TEST_REQUEST');
+export const deleteTestSuccess = createAction('DELETE_TEST_SUCCESS');
+export const deleteTestError = createAction('DELETE_TEST_ERROR');

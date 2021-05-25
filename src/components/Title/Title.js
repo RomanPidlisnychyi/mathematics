@@ -7,6 +7,7 @@ import {
 } from '../../store/selectors/articleSelectors';
 import { getSectionById } from '../../store/selectors/sectionSelectors';
 import { getThemeById } from '../../store/selectors/themeSelectors';
+import { getTestById } from '../../store/selectors/testSelectors';
 import { onGetArticles } from '../../store/operations/articleOperations';
 import { onGetSections } from '../../store/operations/sectionOperations';
 import { onGetThemes } from '../../store/operations/themeOperations';
@@ -18,6 +19,8 @@ export default function Title({ match }) {
   const articleId = match.params.articleId;
   const sectionId = match.params.sectionId;
   const themeId = match.params.themeId;
+  const testId = match.params.testId;
+
   const isTesting = match.path.includes('/test');
   const isResults = match.path.includes('/results');
   const resultId = match.params.resultId;
@@ -26,6 +29,7 @@ export default function Title({ match }) {
   const article = useSelector(state => getArticleById(state, articleId));
   const section = useSelector(state => getSectionById(state, sectionId));
   const theme = useSelector(state => getThemeById(state, themeId));
+  const test = useSelector(state => getTestById(state, testId));
 
   useEffect(() => {
     if (isArticles && !articles.length) {
@@ -67,6 +71,14 @@ export default function Title({ match }) {
           </Link>
         </span>
       )}
+      {testId && (
+        <span>
+          &#129042;
+          <Link to={`/articles/${articleId}/${sectionId}/${themeId}/${testId}`}>
+            Тест
+          </Link>
+        </span>
+      )}
       {isResults && (
         <span>
           &#129042;
@@ -91,7 +103,7 @@ export default function Title({ match }) {
           <Link
             to={`/articles/${articleId}/${sectionId}/${themeId}/results/${resultId}`}
           >
-            Тест
+            Оцінка
           </Link>
         </span>
       )}

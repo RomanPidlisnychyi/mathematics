@@ -1,15 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { onGetTestById } from '../../store/operations/testOperations';
+import { ButtonUpdate, ButtonDelete } from '../Buttons';
+import { UpdateTestForm } from '../Forms';
+import { MyModal } from '../Modal';
+import { onDeleteTest } from '../../store/operations/testOperations';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 
-export default function Test({ match }) {
-  const dispatch = useDispatch();
+function Test({ match }) {
   const { testId } = match.params;
+  const dispatch = useDispatch();
+  const [isModal, setIsModal] = useState(null);
 
-  const [test, setTest] = useState(null);
+  const handleBtn = e => {
+    const value = e && e.target && e.target.value;
 
-  useEffect(() => {
-    dispatch(onGetTestById(testId));
-  }, [dispatch]);
-  return <div>{testId}</div>;
+    if (value) {
+      setIsModal(value);
+      return;
+    }
+
+    setIsModal(null);
+  };
+
+  const handleDelBtn = () => {
+    dispatch(onDeleteTest(testId));
+    setIsModal(null);
+  };
+
+  return (
+    <div>
+      {testId}
+      {isModal ? (
+        isModal === 'update' ? (
+          <MyModal
+            isModal={isModal}
+            title={'Змінити?'}
+            handleSubmit={() => {}}
+            handleModal={handleBtn}
+          >
+            <UpdateTestForm />
+          </MyModal>
+        ) : (
+          <MyModal
+            title={'Видалити тест?'}
+            handleSubmit={handleDelBtn}
+            handleModal={handleBtn}
+          />
+        )
+      ) : (
+        <>
+          <ButtonUpdate title="тест" handleBtn={handleBtn} />
+          <ButtonDelete title="тест" handleDelBtn={handleBtn} />
+        </>
+      )}
+    </div>
+  );
 }
+
+export default viewWrappHoc(Test);

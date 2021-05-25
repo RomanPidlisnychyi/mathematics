@@ -8,6 +8,9 @@ import {
   getTestByIdRequest,
   getTestByIdSuccess,
   getTestByIdError,
+  deleteTestRequest,
+  deleteTestSuccess,
+  deleteTestError,
 } from '../actions/testActions';
 import { onCleanMessage } from './authOperations';
 import { fetching } from '../../utils/apiUtils';
@@ -68,4 +71,23 @@ export const onGetTestById = testId => async dispatch => {
   }
 
   dispatch(getTestByIdError(payload));
+};
+
+export const onDeleteTest = testId => async dispatch => {
+  dispatch(deleteTestRequest());
+
+  const option = {
+    method: 'delete',
+    path: `/tests/${testId}`,
+  };
+
+  const payload = await fetching(option);
+
+  if (payload.status < 400) {
+    dispatch(deleteTestSuccess(testId));
+    return;
+  }
+
+  dispatch(deleteTestError(payload));
+  dispatch(onCleanMessage());
 };

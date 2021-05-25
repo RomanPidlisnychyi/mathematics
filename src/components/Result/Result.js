@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title } from '../Title';
 import { TestingResultList } from '../Lists';
 import { LinkToLogin } from '../LinkToLogin';
 import { onGetTestingResultById } from '../../store/operations/testingOperations';
 import { getUpdatedTestingResultById } from '../../store/selectors/testingSelectors';
 import { getName } from '../../store/selectors/authSelectors';
 import { clearTestingResultById } from '../../store/actions/testingActions';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Result.module.css';
 
-export default function Result({ match }) {
+function Result({ match }) {
   const resultId = match.params.resultId;
   const isAuthenticated = useSelector(getName);
   const dispatch = useDispatch();
@@ -25,21 +25,18 @@ export default function Result({ match }) {
   }, [dispatch, isAuthenticated]);
 
   const result = useSelector(getUpdatedTestingResultById);
-  return (
-    <div>
-      <Title match={match} />
-      {isAuthenticated ? (
-        <div className={styles.container}>
-          {result && (
-            <div>
-              {result.time}/{result.date}
-              <TestingResultList testing={result.testing} />
-            </div>
-          )}
+  return isAuthenticated ? (
+    <div className={styles.container}>
+      {result && (
+        <div>
+          {result.time}/{result.date}
+          <TestingResultList testing={result.testing} />
         </div>
-      ) : (
-        <LinkToLogin />
       )}
     </div>
+  ) : (
+    <LinkToLogin />
   );
 }
+
+export default viewWrappHoc(Result);

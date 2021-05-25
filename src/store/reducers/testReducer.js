@@ -6,11 +6,14 @@ import {
   setQuestionSuccess,
   setAnswerSuccess,
   cleanTestState,
+  deleteTestSuccess,
 } from '../actions/testActions';
 
 export const tests = createReducer([], {
   [getTestsSuccess]: (state, { payload }) => [...state, ...payload],
   [createTestSuccess]: (state, { payload }) => [...state, payload],
+  [deleteTestSuccess]: (state, { payload }) =>
+    state.filter(test => test._id !== payload),
 });
 
 const questions = createReducer([], {

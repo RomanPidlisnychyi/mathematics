@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { SectionsList } from '../Lists';
 import { MyModal } from '../Modal';
 import { CreateArticleSectionForm } from '../Forms';
-import { Title } from '../Title';
 import { ButtonDelete, ButtonAdd } from '../Buttons';
 import { onCreateSection } from '../../store/operations/sectionOperations';
 import { onDeleteArticle } from '../../store/operations/articleOperations';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Article.module.css';
 
-export default function Article({ match, location }) {
+function Article({ match, location }) {
   const articleId = match.params.articleId;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(null);
@@ -45,7 +45,6 @@ export default function Article({ match, location }) {
   };
   return (
     <div className={styles.container}>
-      <Title match={match} />
       <SectionsList {...location} articleId={articleId} />
       {isModal ? (
         isModal === 'create' ? (
@@ -73,3 +72,5 @@ export default function Article({ match, location }) {
     </div>
   );
 }
+
+export default viewWrappHoc(Article);

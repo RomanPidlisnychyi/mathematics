@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinkToLogin } from '../LinkToLogin';
 import { getTesting } from '../../store/selectors/testingSelectors';
 import { clearTesting } from '../../store/actions/testingActions';
-import { Title } from '../Title';
 import { onCreateTestingResult } from '../../store/operations/testingOperations';
 import { getName } from '../../store/selectors/authSelectors';
+import viewWrappHoc from '../../utils/viewWrappHoc';
 import styles from './Testing.module.css';
 
-export default function Testing({ match, history, location }) {
+function Testing({ match, history, location }) {
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector(getName);
@@ -54,42 +54,39 @@ export default function Testing({ match, history, location }) {
       dispatch(clearTesting());
     };
   }, [dispatch]);
-  return (
-    <div>
-      <Title match={match} />
-      {isAuthenticated ? (
+  return isAuthenticated ? (
+    <>
+      {testing && testing.length > 0 && (
         <>
-          {testing && testing.length > 0 && (
-            <>
-              <ul>
-                {testing[testIndex].questions.map(question => (
-                  <li key={question.question}>{question.question}</li>
-                ))}
-              </ul>
-              <ul className={styles.list}>
-                {testing[testIndex].answers.map(answer => (
-                  <li key={answer}>
-                    <label>
-                      <input
-                        type="radio"
-                        value={answer}
-                        onChange={handleInput}
-                        checked={value === answer}
-                      />
-                      {answer}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-          <button type="button" onClick={handleBtn} disabled={!value}>
-            {isNotLastTest ? 'next' : 'done'}
-          </button>
+          <ul>
+            {testing[testIndex].questions.map(question => (
+              <li key={question.question}>{question.question}</li>
+            ))}
+          </ul>
+          <ul className={styles.list}>
+            {testing[testIndex].answers.map(answer => (
+              <li key={answer}>
+                <label>
+                  <input
+                    type="radio"
+                    value={answer}
+                    onChange={handleInput}
+                    checked={value === answer}
+                  />
+                  {answer}
+                </label>
+              </li>
+            ))}
+          </ul>
         </>
-      ) : (
-        <LinkToLogin />
       )}
-    </div>
+      <button type="button" onClick={handleBtn} disabled={!value}>
+        {isNotLastTest ? 'next' : 'done'}
+      </button>
+    </>
+  ) : (
+    <LinkToLogin />
   );
 }
+
+export default viewWrappHoc(Testing);
