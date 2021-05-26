@@ -79,7 +79,6 @@ export const onCurrent = tokens => async dispatch => {
   };
   const payload = await fetching(option);
 
-  dispatch(onGetArticles());
   if (payload.status < 400) {
     dispatch(currentSuccess(payload.data.user));
     return;

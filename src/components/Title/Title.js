@@ -11,6 +11,7 @@ import { getTestById } from '../../store/selectors/testSelectors';
 import { onGetArticles } from '../../store/operations/articleOperations';
 import { onGetSections } from '../../store/operations/sectionOperations';
 import { onGetThemes } from '../../store/operations/themeOperations';
+import { onGetTests } from '../../store/operations/testOperations';
 import { onGetTesting } from '../../store/operations/testingOperations';
 
 export default function Title({ match }) {
@@ -40,6 +41,9 @@ export default function Title({ match }) {
     }
     if (themeId && !theme) {
       dispatch(onGetThemes(sectionId));
+    }
+    if (testId && !test) {
+      dispatch(onGetTests(themeId));
     }
     if (isTesting) {
       dispatch(onGetTesting(themeId));

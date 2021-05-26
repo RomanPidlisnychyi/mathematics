@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ButtonUpdate, ButtonDelete } from '../Buttons';
 import { UpdateTestForm } from '../Forms';
 import { MyModal } from '../Modal';
 import { onDeleteTest } from '../../store/operations/testOperations';
+import { getTestById } from '../../store/selectors/testSelectors';
 import viewWrappHoc from '../../utils/viewWrappHoc';
+import Button from '@material-ui/core/Button';
 
 function Test({ match }) {
   const { testId } = match.params;
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(null);
 
+  const test = useSelector(state => getTestById(state, testId));
   const handleBtn = e => {
     const value = e && e.target && e.target.value;
 
@@ -29,7 +32,11 @@ function Test({ match }) {
 
   return (
     <div>
-      {testId}
+      {test && (
+        <Button variant="contained" color="primary">
+          {test._id}
+        </Button>
+      )}
       {isModal ? (
         isModal === 'update' ? (
           <MyModal
