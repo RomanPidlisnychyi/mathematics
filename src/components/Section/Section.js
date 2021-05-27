@@ -7,6 +7,7 @@ import { ButtonAdd, ButtonDelete } from '../Buttons';
 import { onCreateTheme } from '../../store/operations/themeOperations';
 import { onDeleteSection } from '../../store/operations/sectionOperations';
 import viewWrappHoc from '../../utils/viewWrappHoc';
+import { preperingCredentials } from '../../utils/preperingCredentials';
 import styles from './Section.module.css';
 
 function Section({ match, location }) {
@@ -31,14 +32,9 @@ function Section({ match, location }) {
   };
 
   const handleSubmit = () => {
-    let credantials;
-
     const allInputs = document.querySelectorAll('input');
 
-    allInputs.forEach(input => {
-      const { name, value } = input;
-      credantials = { ...credantials, [name]: value };
-    });
+    const credantials = preperingCredentials([...allInputs]);
 
     dispatch(onCreateTheme({ ...credantials, sectionId }));
     setIsModal(false);

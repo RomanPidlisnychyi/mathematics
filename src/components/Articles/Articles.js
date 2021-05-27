@@ -7,6 +7,7 @@ import { ButtonAdd } from '../Buttons';
 import { getStatus } from '../../store/selectors/authSelectors';
 import { onCreateArticle } from '../../store/operations/articleOperations';
 import viewWrappHoc from '../../utils/viewWrappHoc';
+import { preperingCredentials } from '../../utils/preperingCredentials';
 import styles from './Article.module.css';
 
 function Article({ location }) {
@@ -18,14 +19,9 @@ function Article({ location }) {
 
   const handleBtn = () => setIsModal(!isModal);
   const handleSubmit = () => {
-    let credantials;
-
     const allInputs = document.querySelectorAll('input');
 
-    allInputs.forEach(input => {
-      const { name, value } = input;
-      credantials = { ...credantials, [name]: value };
-    });
+    const credantials = preperingCredentials([...allInputs]);
 
     dispatch(onCreateArticle(credantials)).then(response => {
       if (response) {

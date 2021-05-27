@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { InputGroup, Form, Button } from 'react-bootstrap';
+import ThemesListOfQuery from '../../Lists/ThemesListOfQuery/ThemesListOfQuery';
 import {
   onGetThemesByQuery,
   onGetThemePath,
@@ -32,8 +33,6 @@ export default function MainInput({ history }) {
       return;
     }
 
-    //dispatch theme => return path for push /articles/:articleId/:sectionId/:themeId
-    // console.log(`value`, value);
     const theme = themes[value];
     dispatch(onGetThemePath(theme)).then(path => history.push(path));
   };
@@ -56,15 +55,7 @@ export default function MainInput({ history }) {
           Скинути
         </Button>
       </InputGroup.Append>
-      <ul>
-        {themes.map((theme, index) => (
-          <li key={theme._id}>
-            <button value={index} onClick={handleBtn}>
-              {theme.name}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <ThemesListOfQuery themes={themes} handleBtn={handleBtn} />
     </InputGroup>
   );
 }

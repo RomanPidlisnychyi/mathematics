@@ -18,7 +18,6 @@ import {
   setMessage,
   cleanMessage,
 } from '../actions/authActions';
-import { onGetArticles } from './articleOperations';
 import { token, fetching } from '../../utils/apiUtils';
 
 export const onRegister = credentials => async dispatch => {

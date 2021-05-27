@@ -6,6 +6,7 @@ import { MyButton } from '../../MyButton';
 import { onLogin } from '../../../store/operations/authOperations';
 import { inputsOnValidation } from '../../../utils/validator';
 import { inputs } from '../../../inputs';
+import { preperingCredentials } from '../../../utils/preperingCredentials';
 import styles from '../SingUpForm/SingUpForm.module.css';
 
 export default function SingInForm() {
@@ -24,14 +25,9 @@ export default function SingInForm() {
       return;
     }
 
-    let credantials;
-
     const allInputs = document.querySelectorAll('input');
 
-    allInputs.forEach(input => {
-      const { name, value } = input;
-      credantials = { ...credantials, [name]: value };
-    });
+    const credantials = preperingCredentials([...allInputs]);
 
     dispatch(onLogin(credantials));
   };

@@ -6,6 +6,7 @@ import { MyInput } from '../../Inputs';
 import { MyButton } from '../../MyButton';
 import { inputsOnValidation } from '../../../utils/validator';
 import { inputs } from '../../../inputs';
+import { preperingCredentials } from '../../../utils/preperingCredentials';
 import styles from './SingUpForm.module.css';
 
 export default function SingUpForm(props) {
@@ -28,14 +29,9 @@ export default function SingUpForm(props) {
       return;
     }
 
-    let credantials;
-
     const allInputs = document.querySelectorAll('input');
 
-    allInputs.forEach(input => {
-      const { name, value } = input;
-      credantials = { ...credantials, [name]: value };
-    });
+    const credantials = preperingCredentials([...allInputs]);
 
     delete credantials.confirmPassword;
 
